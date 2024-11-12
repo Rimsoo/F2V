@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://c41ojbodury12"]
+
+[ext_resource type="Texture2D" uid="uid://cfc0nwe58exqj" path="res://assets/grid.png" id="1_kfjmi"]
+
+[resource]
+resource_name = "wall"
+transparency = 1
+albedo_texture = ExtResource("1_kfjmi")
+roughness = 0.0764706
+uv1_scale = Vector3(5, 5, 5)
+uv1_triplanar = true

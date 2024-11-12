@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://dfvlki83rryii"]
+
+[ext_resource type="PackedScene" uid="uid://cueb4nnmy3dci" path="res://scenes/field.tscn" id="2_2aijv"]
+[ext_resource type="PackedScene" uid="uid://bm3noegm6petk" path="res://scenes/ball.tscn" id="2_t1ing"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_v62um"]
+sky_top_color = Color(0.764241, 0.680908, 0.789233, 1)
+sky_horizon_color = Color(0.165, 0.460167, 0.55, 1)
+sun_curve = 0.848526
+
+[sub_resource type="Sky" id="Sky_42462"]
+sky_material = SubResource("ProceduralSkyMaterial_v62um")
+
+[sub_resource type="Environment" id="Environment_p47a6"]
+background_mode = 2
+sky = SubResource("Sky_42462")
+
+[node name="Game" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.973022, -0.230712, 0, 0.230712, 0.973022, -0.118671, 0.631497, 1.72973)
+environment = SubResource("Environment_p47a6")
+current = true
+
+[node name="field" parent="." instance=ExtResource("2_2aijv")]
+
+[node name="ball" parent="." instance=ExtResource("2_t1ing")]
+transform = Transform3D(5, 0, 0, 0, 4.99238, -0.27597, 0, 0.27597, 4.99238, -0.118671, 0.631497, 0.134575)

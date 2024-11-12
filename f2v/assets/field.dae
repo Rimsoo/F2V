@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 4.0.2 commit date:2023-12-05, commit time:07:41, hash:9be62e85b727</authoring_tool>
+    </contributor>
+    <created>2024-11-12T00:13:44</created>
+    <modified>2024-11-12T00:13:44</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="grass-effect">
+      <profile_COMMON>
+        <newparam sid="gazon_jpg-surface">
+          <surface type="2D">
+            <init_from>gazon_jpg</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="gazon_jpg-sampler">
+          <sampler2D>
+            <source>gazon_jpg-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <texture texture="gazon_jpg-sampler" texcoord="CarteUV"/>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.45</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="wall-effect">
+      <profile_COMMON>
+        <newparam sid="grid_png-surface">
+          <surface type="2D">
+            <init_from>grid_png</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="grid_png-sampler">
+          <sampler2D>
+            <source>grid_png-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <texture texture="grid_png-sampler" texcoord="CarteUV"/>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.45</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_images/>
+  <library_materials>
+    <material id="grass-material" name="grass">
+      <instance_effect url="#grass-effect"/>
+    </material>
+    <material id="wall-material" name="wall">
+      <instance_effect url="#wall-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="Plan-mesh" name="Plan">
+      <mesh>
+        <source id="Plan-mesh-positions">
+          <float_array id="Plan-mesh-positions-array" count="48">-0.9459362 0.6005316 0 -0.6069627 0.9185375 0 0.5846859 0.9360104 0 0.9271538 0.6389718 0 0.9411324 -0.6050955 0 0.6755447 -0.9126176 0 -0.7327673 -0.8986394 0 -0.9074959 -0.7308999 0 -1.052749 0.6692339 0.4120765 -0.67528 1.023354 0.4120765 0.651697 1.042811 0.4120765 1.033057 0.7120395 0.4120765 1.048623 -0.6733091 0.4120765 0.752874 -1.015755 0.4120765 -0.8153715 -1.000189 0.4120765 -1.009943 -0.8134004 0.4120765</float_array>
+          <technique_common>
+            <accessor source="#Plan-mesh-positions-array" count="16" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plan-mesh-normals">
+          <float_array id="Plan-mesh-normals-array" count="51">-0.6271852 -0.7231072 0.289404 0 0 1 0.660233 0.6877424 0.3018326 -0.9680027 -0.01087665 0.2507038 0.6555275 -0.6987497 0.2864135 0.9687536 0.02796924 0.2464433 -0.723776 0.6250807 0.2922714 0.0142005 -0.9684771 0.2486974 0.009632289 0.9704564 0.2410842 -0.6271851 -0.7231074 0.2894039 0.6602328 0.6877426 0.3018325 -0.9680027 -0.01087665 0.2507039 0.6555278 -0.6987495 0.2864132 0.9687536 0.02796924 0.2464432 -0.7237764 0.6250804 0.2922711 0.0142005 -0.9684772 0.2486972 0.009632229 0.9704564 0.2410842</float_array>
+          <technique_common>
+            <accessor source="#Plan-mesh-normals-array" count="17" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plan-mesh-map-0">
+          <float_array id="Plan-mesh-map-0-array" count="132">0.9635769 0.8194859 0.7923429 0.9680051 0.7923429 0.9680051 0.1336163 0.05068027 0.8377724 0.04369115 0.9705663 0.1974522 0.04625207 0.13455 0.1336163 0.05068027 0.1336163 0.05068027 0.9635769 0.8194859 0.9705663 0.1974522 0.9635769 0.8194859 0.02703189 0.8002657 0.1965187 0.9592688 0.02703189 0.8002657 0.04625207 0.13455 0.02703189 0.8002657 0.04625207 0.13455 0.8377724 0.04369115 0.9705663 0.1974522 0.9705663 0.1974522 0.7923429 0.9680051 0.1965187 0.9592688 0.1965187 0.9592688 0.1336163 0.05068027 0.8377724 0.04369115 0.8377724 0.04369115 0.9635769 0.8194859 0.9635769 0.8194859 0.7923429 0.9680051 0.9705663 0.1974522 0.9635769 0.8194859 0.7923429 0.9680051 0.7923429 0.9680051 0.1965187 0.9592688 0.9705663 0.1974522 0.1965187 0.9592688 0.02703189 0.8002657 0.1336163 0.05068027 0.9705663 0.1974522 0.1965187 0.9592688 0.1336163 0.05068027 0.02703189 0.8002657 0.04625207 0.13455 0.1336163 0.05068027 0.04625207 0.13455 0.04625207 0.13455 0.1336163 0.05068027 0.9635769 0.8194859 0.9705663 0.1974522 0.9705663 0.1974522 0.02703189 0.8002657 0.1965187 0.9592688 0.1965187 0.9592688 0.04625207 0.13455 0.02703189 0.8002657 0.02703189 0.8002657 0.8377724 0.04369115 0.8377724 0.04369115 0.9705663 0.1974522 0.7923429 0.9680051 0.7923429 0.9680051 0.1965187 0.9592688 0.1336163 0.05068027 0.1336163 0.05068027 0.8377724 0.04369115</float_array>
+          <technique_common>
+            <accessor source="#Plan-mesh-map-0-array" count="66" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plan-mesh-vertices">
+          <input semantic="POSITION" source="#Plan-mesh-positions"/>
+        </vertices>
+        <triangles material="grass-material" count="6">
+          <input semantic="VERTEX" source="#Plan-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plan-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plan-mesh-map-0" offset="2" set="0"/>
+          <p>6 1 3 5 1 4 4 1 5 4 1 30 3 1 31 2 1 32 2 1 33 1 1 34 4 1 35 1 1 36 0 1 37 6 1 38 4 1 39 1 1 40 6 1 41 0 1 42 7 1 43 6 1 44</p>
+        </triangles>
+        <triangles material="wall-material" count="16">
+          <input semantic="VERTEX" source="#Plan-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plan-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plan-mesh-map-0" offset="2" set="0"/>
+          <p>3 0 0 10 0 1 2 0 2 7 2 6 14 2 7 6 2 8 3 3 9 12 3 10 11 3 11 0 4 12 9 4 13 8 4 14 7 5 15 8 5 16 15 5 17 5 6 18 12 6 19 4 6 20 2 7 21 9 7 22 1 7 23 6 8 24 13 8 25 5 8 26 3 9 27 11 9 28 10 9 29 7 10 45 15 10 46 14 10 47 3 11 48 4 11 49 12 11 50 0 12 51 1 12 52 9 12 53 7 13 54 0 13 55 8 13 56 5 14 57 13 14 58 12 14 59 2 15 60 10 15 61 9 15 62 6 16 63 14 16 64 13 16 65</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="Plan" name="Plan" type="NODE">
+        <matrix sid="transform">50 0 0 0 0 50 0 0 0 0 50 0 0 0 0 1</matrix>
+        <instance_geometry url="#Plan-mesh" name="Plan">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="grass-material" target="#grass-material">
+                <bind_vertex_input semantic="CarteUV" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="wall-material" target="#wall-material">
+                <bind_vertex_input semantic="CarteUV" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>
