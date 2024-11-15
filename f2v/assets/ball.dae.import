@@ -39,9 +39,16 @@ _subresources={
 }
 },
 "nodes": {
+"PATH:AnimationPlayer": {
+"import/skip_import": true
+},
 "PATH:dirty_football_LOD0": {
+"decomposition/advanced": true,
+"decomposition/mode": 1,
 "generate/physics": true,
-"physics/body_type": 1
+"physics/body_type": 1,
+"physics/physics_material_override": null,
+"physics/shape_type": 4
 }
 }
 }

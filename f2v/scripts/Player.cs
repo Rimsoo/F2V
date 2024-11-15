@@ -3,11 +3,12 @@ using System;
 
 public partial class Player : CharacterBody3D
 {
-    public const float Speed = 5.0f; // Vitesse de la voiture
-    public const float TurnSpeed = 3.0f; // Vitesse de rotation
-    public const float JumpVelocity = 4.5f;
-    public const float CameraSensitivity = 0.1f; // Sensibilité de la caméra
-    public const float CameraResetSpeed = 2.0f; // Vitesse de retour de la caméra à la position de base
+    [Export] public float Speed = 20.0f; // Vitesse de la voiture
+    [Export] public float TurnSpeed = 3.0f; // Vitesse de rotation
+    [Export] public float JumpVelocity = 4.5f;
+    [Export] public float CameraSensitivity = 0.1f; // Sensibilité de la caméra
+    [Export] public float CameraResetSpeed = 10.0f; // Vitesse de retour de la caméra à la position de base
+    [Export] public float maxCameraAngle = 80.0f; // Angle maximal de la caméra
 
     private Node3D camera; // Référence à la caméra
     private Vector3 cameraBaseRotation; // Rotation de base de la caméra
@@ -43,34 +44,39 @@ public partial class Player : CharacterBody3D
         // Accélération et marche arrière avec `RT` et `LT`
         float forwardInput = Input.GetActionStrength("move_forward") - Input.GetActionStrength("move_backward");
 
-        // Déplace la voiture dans la direction vers laquelle elle est orientée
-        Vector3 forwardDirection = -Transform.Basis.Z; // La direction vers l’avant de la voiture
-        velocity.X = forwardDirection.X * forwardInput * Speed;
-        velocity.Z = forwardDirection.Z * forwardInput * Speed;
+		if(IsOnFloor())
+		{
+			// Déplace la voiture dans la direction vers laquelle elle est orientée
+			Vector3 forwardDirection = -Transform.Basis.Z; // La direction vers l’avant de la voiture
+			velocity.X = forwardDirection.X * forwardInput * Speed;
+			velocity.Z = forwardDirection.Z * forwardInput * Speed;
+		}
 
         // Rotation de la voiture avec le joystick gauche, inversée
-        float turnInput = Input.GetActionStrength("turn_right") - Input.GetActionStrength("turn_left");
-        Rotation = new Vector3(Rotation.X, Rotation.Y - turnInput * TurnSpeed * (float)delta, Rotation.Z);
+        float leftRightTurnInput = Input.GetActionStrength("turn_right") - Input.GetActionStrength("turn_left");
+        float upDownTurnInput = Input.GetActionStrength("turn_up") - Input.GetActionStrength("turn_down");
+        Rotation = new Vector3(Rotation.X - upDownTurnInput * TurnSpeed * (float)delta, Rotation.Y - leftRightTurnInput * TurnSpeed * (float)delta, Rotation.Z );
 
         // Mise à jour de la vélocité en Y et déplacement
-        Velocity = velocity;
+		Velocity = velocity;
         MoveAndSlide();
 
         // Contrôle de la caméra avec le joystick droit
         float cameraHorizontal = Input.GetActionStrength("camera_right") - Input.GetActionStrength("camera_left");
-        float cameraVertical = Input.GetActionStrength("camera_down") - Input.GetActionStrength("camera_up");
 
         if (camera != null)
         {
-            // Si le joystick est utilisé, rotation de la caméra
-            if (cameraHorizontal != 0 || cameraVertical != 0)
+            // Rotation de la caméra avec limitation de l'angle
+            float newCameraRotation = camera.Rotation.Y - cameraHorizontal * CameraSensitivity;
+
+            // Limiter l'angle vertical de la caméra
+            newCameraRotation = Mathf.Clamp(newCameraRotation, -Mathf.DegToRad(maxCameraAngle), Mathf.DegToRad(maxCameraAngle));
+
+            camera.Rotation = new Vector3(camera.Rotation.X, newCameraRotation, camera.Rotation.Z);
+
+            // Si aucun mouvement n'est détecté, retour progressif de la caméra à sa position de base
+            if (cameraHorizontal == 0)
             {
-                camera.RotateY(-cameraHorizontal * CameraSensitivity);
-                camera.RotateX(-cameraVertical * CameraSensitivity);
-            }
-            else
-            {
-                // Retour progressif de la caméra à sa position de base
                 camera.Rotation = new Vector3(
                     Mathf.Lerp(camera.Rotation.X, cameraBaseRotation.X, CameraResetSpeed * (float)delta),
                     Mathf.Lerp(camera.Rotation.Y, cameraBaseRotation.Y, CameraResetSpeed * (float)delta),
