@@ -7,7 +7,7 @@
 [node name="Game" type="Node3D"]
 
 [node name="field" parent="." instance=ExtResource("1_5w4j6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00692177, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -12, 0)
 
 [node name="ball" parent="." instance=ExtResource("2_dwi60")]
 transform = Transform3D(1, 0, 0, 0, 0.998476, -0.055194, 0, 0.055194, 0.998476, -0.118671, 0.631497, 0.134575)
@@ -19,4 +19,4 @@ light_energy = 2.0
 shadow_enabled = true
 
 [node name="CharacterBody3D" parent="." instance=ExtResource("3_rkcuw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.4504, 1.41419, 0)
+transform = Transform3D(-0.999984, 0, -0.00567234, 0, 1, 0, 0.00567234, 0, -0.999984, 0, 0, 0)
