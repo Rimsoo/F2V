@@ -3,20 +3,20 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b7aqtl7cvcppd"
-path="res://.godot/imported/ball.dae-10120edcf2be2c5ae6d0c69e023513b8.scn"
+uid="uid://dfpaagutrne2d"
+path="res://.godot/imported/car.dae-be61a9359ca8b23badaded97e000d88a.scn"
 
 [deps]
 
-source_file="res://assets/ball.dae"
-dest_files=["res://.godot/imported/ball.dae-10120edcf2be2c5ae6d0c69e023513b8.scn"]
+source_file="res://assets/car.dae"
+dest_files=["res://.godot/imported/car.dae-be61a9359ca8b23badaded97e000d88a.scn"]
 
 [params]
 
 nodes/root_type=""
 nodes/root_name=""
 nodes/apply_root_scale=true
-nodes/root_scale=10.0
+nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false
 meshes/ensure_tangents=true
 meshes/generate_lods=true
@@ -32,16 +32,22 @@ animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={
-"materials": {
-"dirty_football": {
-"use_external/enabled": true,
-"use_external/path": ""
-}
-},
 "nodes": {
-"PATH:dirty_football_LOD0": {
+"PATH:AnimationPlayer": {
+"import/skip_import": true
+},
+"PATH:Camera": {
+"import/skip_import": true
+},
+"PATH:Cube": {
+"import/skip_import": true
+},
+"PATH:Cube_001": {
 "generate/physics": true,
 "physics/body_type": 1
+},
+"PATH:Light": {
+"import/skip_import": true
 }
 }
 }

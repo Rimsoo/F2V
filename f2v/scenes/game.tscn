@@ -1,28 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://dfvlki83rryii"]
+[gd_scene load_steps=4 format=3 uid="uid://dfvlki83rryii"]
 
-[ext_resource type="PackedScene" uid="uid://cueb4nnmy3dci" path="res://scenes/field.tscn" id="2_2aijv"]
-[ext_resource type="PackedScene" uid="uid://bm3noegm6petk" path="res://scenes/ball.tscn" id="2_t1ing"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_v62um"]
-sky_top_color = Color(0.764241, 0.680908, 0.789233, 1)
-sky_horizon_color = Color(0.165, 0.460167, 0.55, 1)
-sun_curve = 0.848526
-
-[sub_resource type="Sky" id="Sky_42462"]
-sky_material = SubResource("ProceduralSkyMaterial_v62um")
-
-[sub_resource type="Environment" id="Environment_p47a6"]
-background_mode = 2
-sky = SubResource("Sky_42462")
+[ext_resource type="PackedScene" uid="uid://cueb4nnmy3dci" path="res://scenes/Field.tscn" id="1_5w4j6"]
+[ext_resource type="PackedScene" uid="uid://bm3noegm6petk" path="res://scenes/Ball.tscn" id="2_dwi60"]
+[ext_resource type="PackedScene" uid="uid://dnqpp0x1tcky6" path="res://scenes/Player.tscn" id="3_rkcuw"]
 
 [node name="Game" type="Node3D"]
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.973022, -0.230712, 0, 0.230712, 0.973022, -0.118671, 0.631497, 1.72973)
-environment = SubResource("Environment_p47a6")
-current = true
+[node name="field" parent="." instance=ExtResource("1_5w4j6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00692177, 0, 0)
 
-[node name="field" parent="." instance=ExtResource("2_2aijv")]
+[node name="ball" parent="." instance=ExtResource("2_dwi60")]
+transform = Transform3D(1, 0, 0, 0, 0.998476, -0.055194, 0, 0.055194, 0.998476, -0.118671, 0.631497, 0.134575)
 
-[node name="ball" parent="." instance=ExtResource("2_t1ing")]
-transform = Transform3D(5, 0, 0, 0, 4.99238, -0.27597, 0, 0.27597, 4.99238, -0.118671, 0.631497, 0.134575)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.537152, 0.843485, 0, -0.843485, 0.537152, 0, 7.49499, 0)
+light_color = Color(0.75, 0.672, 0.555, 1)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("3_rkcuw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.4504, 1.41419, 0)
