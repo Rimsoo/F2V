@@ -3,11 +3,16 @@
 [ext_resource type="PackedScene" uid="uid://b7aqtl7cvcppd" path="res://assets/ball.dae" id="1_0kqv4"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_g4vn2"]
+resource_local_to_scene = true
+friction = 0.0
+bounce = 0.6
 
 [node name="ball" instance=ExtResource("1_0kqv4")]
 
 [node name="dirty_football_LOD0" parent="." index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+collision_layer = 2
+collision_mask = 2
 physics_material_override = SubResource("PhysicsMaterial_g4vn2")
 
 [node name="CollisionShape3D" parent="dirty_football_LOD0" index="1"]

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4djv18omplw5"]
+
+[ext_resource type="PackedScene" uid="uid://dfpaagutrne2d" path="res://assets/car.dae" id="1_lqqdb"]
+
+[node name="car" instance=ExtResource("1_lqqdb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="Cube_001" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+collision_layer = 3

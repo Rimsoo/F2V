@@ -44,6 +44,7 @@ shadow_mesh = SubResource("ArrayMesh_j6f1n")
 points = PackedVector3Array(-1, -1, -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, -1, 1, 1, 1, -1, -1, -1, -1, 1, -1, 1, -1)
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
+collision_layer = 3
 script = ExtResource("1_afwq0")
 
 [node name="Cube_001" type="MeshInstance3D" parent="."]
