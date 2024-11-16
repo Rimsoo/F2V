@@ -48,9 +48,9 @@ public partial class Player : CharacterBody3D
                 Vector3 final = new Vector3(0, Rotation.Y, 0);
                 // Rendre la rotation plus douce
                 Rotation = new Vector3(
-                    Mathf.Lerp(Rotation.X, final.X, 0.1f),
-                    Mathf.Lerp(Rotation.Y, final.Y, 0.1f),
-                    Mathf.Lerp(Rotation.Z, final.Z, 0.1f)
+                    Mathf.Lerp(Rotation.X, final.X, 10.0f * (float)delta),
+                    Mathf.Lerp(Rotation.Y, final.Y, 10.0f * (float)delta),
+                    Mathf.Lerp(Rotation.Z, final.Z, 10.0f * (float)delta)
                 );
             }
         }
@@ -80,9 +80,6 @@ public partial class Player : CharacterBody3D
         {
             upDownTurnInput = Input.GetActionStrength("turn_up") - Input.GetActionStrength("turn_down"); 
             rollInput = Input.GetActionStrength("roll_right") - Input.GetActionStrength("roll_left");
-
-            // Nepas bouger la caméra sur X et Z
-            camera.Rotation = new Vector3(camRotationX, camera.Rotation.Y, camera.Rotation.Z);
         }
         Rotation = new Vector3(Rotation.X - upDownTurnInput * TurnSpeed * (float)delta, Rotation.Y - leftRightTurnInput * TurnSpeed * (float)delta, Rotation.Z - rollInput * TurnSpeed * (float)delta);
         // Mise à jour de la vélocité en Y et déplacement
