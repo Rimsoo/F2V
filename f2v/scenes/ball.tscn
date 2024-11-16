@@ -5,6 +5,7 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_g4vn2"]
 resource_local_to_scene = true
 friction = 0.0
+rough = true
 bounce = 0.6
 
 [node name="ball" instance=ExtResource("1_0kqv4")]
