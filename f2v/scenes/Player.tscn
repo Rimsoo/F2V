@@ -1,60 +1,12 @@
-[gd_scene load_steps=6 format=4 uid="uid://dnqpp0x1tcky6"]
+[gd_scene load_steps=3 format=3 uid="uid://dnqpp0x1tcky6"]
 
 [ext_resource type="Script" path="res://scripts/Player.cs" id="1_afwq0"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ha14"]
-resource_name = "Material.001"
-cull_mode = 2
-albedo_color = Color(0.8, 0.8, 0.8, 1)
-roughness = 0.0764706
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_j6f1n"]
-_surfaces = [{
-"aabb": AABB(-1, -1, -1, 2, 2, 2),
-"format": 34896613377,
-"index_count": 36,
-"index_data": PackedByteArray("AAACAAEAAQAEAAMABQADAAYABwAGAAMAAgAHAAQAAAAGAAcAAAABAAUAAQADAAUABQAGAAAABwADAAQAAgAEAAEAAAAHAAIA"),
-"name": "Material.001",
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 8,
-"vertex_data": PackedByteArray("AAD//wAAAAD///////8AAP////8AAAAAAAAAAP//AAD//wAA//8AAAAA/////wAAAAAAAAAAAAD//wAAAAAAAA==")
-}]
-blend_shape_mode = 0
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_d1xw7"]
-resource_name = "Cube.001"
-_surfaces = [{
-"aabb": AABB(-1, -1, -1, 2, 2, 2),
-"attribute_data": PackedByteArray("/9//f/+f/z//n/9//5//P/9fAAD/X/8//5////9f/7//X////1//f/8f/z//H/9//5//f/9f/z//X/9//5//v/9f/3//X/+//9//P/+fAAD/n/+//1//P/+f/z//n/9/"),
-"format": 34896613399,
-"index_count": 36,
-"index_data": PackedByteArray("AAACAAEAAwAFAAQABgAIAAcACQALAAoADAAOAA0ADwARABAAAAABABIAAwAEABMABgAHABQACQAKABUADAANABYADwAQABcA"),
-"material": SubResource("StandardMaterial3D_3ha14"),
-"name": "Material.001",
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 24,
-"vertex_data": PackedByteArray("AAD//wAA//////////////////8AAP///////////78AAAAA////v///AAD///+/AAD/////VNUAAAAAAABU1QAAAAD//1TV//8AAAAA/78AAAAA////vwAAAAAAAP+//////wAAVNX//wAA//9U1f//AAAAAFTVAAD//wAA/////wAAAAD//wAAAAAAAP//AAD///////8AAP//////vwAA//8AAFTV//8AAP///7////////9U1f////8AAP///3//v/9//7//f/+/////////////////VNVU1VTVVNVU1VTVAAD/fwAA/38AAP9/qiqqKqoqqiqqKqoq/7//v/+//7//v/+//3//v/////9U1VTVAAD/f6oqqir/v/+/")
-}]
-blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_j6f1n")
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_y8ga2"]
-points = PackedVector3Array(-1, -1, -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, -1, 1, 1, 1, -1, -1, -1, -1, 1, -1, 1, -1)
+[ext_resource type="PackedScene" uid="uid://c4djv18omplw5" path="res://scenes/Car.tscn" id="2_iyx2u"]
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
-collision_layer = 3
 script = ExtResource("1_afwq0")
 
-[node name="Cube_001" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0)
-mesh = SubResource("ArrayMesh_d1xw7")
-skeleton = NodePath("")
+[node name="Car" parent="." instance=ExtResource("2_iyx2u")]
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 3, 6)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_y8ga2")
