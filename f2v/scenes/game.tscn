@@ -8,9 +8,9 @@
 [node name="Game" type="Node3D"]
 script = ExtResource("1_6jh2g")
 
-[node name="field" parent="." instance=ExtResource("1_5w4j6")]
+[node name="Field" parent="." instance=ExtResource("1_5w4j6")]
 
-[node name="ball" parent="." instance=ExtResource("2_dwi60")]
+[node name="Ball" parent="." instance=ExtResource("2_dwi60")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.84711, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -19,5 +19,5 @@ light_color = Color(0.75, 0.672, 0.555, 1)
 light_energy = 2.0
 shadow_enabled = true
 
-[node name="CharacterBody3D" parent="." instance=ExtResource("3_rkcuw")]
-transform = Transform3D(-0.999984, 0, -0.00567234, 0, 1, 0, 0.00567234, 0, -0.999984, 0, 4.84711, -8.25611)
+[node name="Player" parent="." instance=ExtResource("3_rkcuw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.847, 10)

@@ -9,6 +9,8 @@ public partial class Car : VehicleBody3D
     [Export] public float BreakForce = 10.0f; // Force de freinage
     [Export] public float JumpForce = 300.0f; // Force de saut
     [Export] public float AirRotationSpeed = 6.0f; // Vitesse de rotation dans les airs
+    [Export] public float DriftFactor = 0.5f; // Facteur de drift
+    [Export] public float DriftTurnSpeed = 1.5f; // Multiplicateur de vitesse de direction pendant le drift
 
     private VehicleWheel3D frontLeftWheel;
     private VehicleWheel3D frontRightWheel;
@@ -35,13 +37,28 @@ public partial class Car : VehicleBody3D
                backRightWheel.IsInContact();
     }
 
+    public bool AreAllWheeNotTouching()
+    {
+        // Vérifie si toutes les roues touchent une surface
+        return ! frontLeftWheel.IsInContact() &&
+               ! frontRightWheel.IsInContact() &&
+               ! backLeftWheel.IsInContact() &&
+               ! backRightWheel.IsInContact();
+    }
+
     public override void _PhysicsProcess(double delta)
     {
         // Gestion de la direction et de la force moteur
         Steering = Mathf.MoveToward(Steering, (Input.GetActionStrength("turn_left") - Input.GetActionStrength("turn_right")) * MaxSteer, (float)delta * 10);
         EngineForce = (Input.GetActionStrength("move_forward") - Input.GetActionStrength("move_backward")) * Power;
-        Brake = Input.GetActionStrength("brake") * BreakForce;
 
+        // Si on est en train de freiner
+        bool IsBraking = Input.IsActionJustPressed("brake");
+        if(IsBraking)
+        {
+            Brake = BreakForce;
+            ApplyDrift(delta);
+        }
         // Contrôle dans les airs
         if (!AreAllWheelsTouching())
         {
@@ -56,21 +73,22 @@ public partial class Car : VehicleBody3D
         CheckJumps();
     }
 
+    private void ApplyDrift(double delta)
+    {
+        // Modifie la traction /riftForce * (float)delta);
+    }
+
     private void AirControl(double delta)
     {
         // Entrées utilisateur pour la rotation
         float pitchInput = Input.GetActionStrength("turn_up") - Input.GetActionStrength("turn_down");
         float rollInput = Input.GetActionStrength("roll_right") - Input.GetActionStrength("roll_left");
+        float yawInput = Input.GetActionStrength("turn_left") - Input.GetActionStrength("turn_right");
 
-        // Rotation instantanée
-        Vector3 angularVelocity = AngularVelocity;
-
-        // Modifie directement la vélocité angulaire
-        angularVelocity.X = pitchInput * AirRotationSpeed;
-        angularVelocity.Z = rollInput * AirRotationSpeed;
-
-        // Applique la nouvelle vélocité angulaire
-        AngularVelocity = angularVelocity;
+        RotateObjectLocal(Vector3.Forward, rollInput * AirRotationSpeed * (float)delta);
+        RotateObjectLocal(Vector3.ModelRight, pitchInput * AirRotationSpeed * (float)delta);
+        if(AreAllWheeNotTouching())
+            RotateObjectLocal(Vector3.Up, yawInput * AirRotationSpeed * (float)delta);
     }
 
     private void CheckJumps()
