@@ -24,7 +24,7 @@ script = ExtResource("1_ejhll")
 Power = 300.0
 MaxSteer = 0.5
 TurnSpeed = 5.0
-JumpForce = 500.0
+JumpForce = 700.0
 DriftFactor = 1.0
 
 [node name="CarBody" type="MeshInstance3D" parent="."]
