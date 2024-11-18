@@ -52,7 +52,7 @@ public partial class Car : VehicleBody3D
         // Gestion de la direction et de la force moteur
         Steering = Mathf.MoveToward(Steering, (Input.GetActionStrength("turn_left") - Input.GetActionStrength("turn_right")) * MaxSteer, (float)delta * 10);
         EngineForce = (Input.GetActionStrength("move_forward") - Input.GetActionStrength("move_backward")) * Power;
-
+        
         // Si on est en train de freiner
         bool IsBraking = Input.IsActionPressed("brake");
         if(IsBraking)
