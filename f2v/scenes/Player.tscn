@@ -5,8 +5,12 @@
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 script = ExtResource("1_afwq0")
+MaxCameraAngle = 100.0
 
 [node name="Car" parent="." instance=ExtResource("2_iyx2u")]
 
-[node name="Camera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 3, 6)
+[node name="TwistPivot" type="Node3D" parent="Car"]
+top_level = true
+
+[node name="Camera" type="Camera3D" parent="Car/TwistPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 5, 6)

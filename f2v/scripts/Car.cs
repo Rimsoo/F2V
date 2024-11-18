@@ -9,41 +9,42 @@ public partial class Car : VehicleBody3D
     [Export] public float BreakForce = 10.0f; // Force de freinage
     [Export] public float JumpForce = 300.0f; // Force de saut
     [Export] public float AirRotationSpeed = 6.0f; // Vitesse de rotation dans les airs
-    [Export] public float DriftFactor = 0.5f; // Facteur de drift
+    [Export] public float DriftFactor = 0.3f; // Facteur de drift
     [Export] public float DriftTurnSpeed = 1.5f; // Multiplicateur de vitesse de direction pendant le drift
+    [Export] public float WheelFrictionDefault = 10.5f; // Multiplicateur de puissance pendant le drift
 
-    private VehicleWheel3D frontLeftWheel;
-    private VehicleWheel3D frontRightWheel;
+    private VehicleWheel3D FrontLeftWheel;
+    private VehicleWheel3D FrontRightWheel;
     private VehicleWheel3D backLeftWheel;
-    private VehicleWheel3D backRightWheel;
+    private VehicleWheel3D BackRightWheel;
 
     private bool CanDoubleJump = false;
 
     public override void _Ready()
     {
         // Récupère chaque roue
-        frontLeftWheel = GetNode<VehicleWheel3D>("WheelFrontLeft");
-        frontRightWheel = GetNode<VehicleWheel3D>("WheelFrontRight");
+        FrontLeftWheel = GetNode<VehicleWheel3D>("WheelFrontLeft");
+        FrontRightWheel = GetNode<VehicleWheel3D>("WheelFrontRight");
         backLeftWheel = GetNode<VehicleWheel3D>("WheelBackLeft");
-        backRightWheel = GetNode<VehicleWheel3D>("WheelBackRight");
+        BackRightWheel = GetNode<VehicleWheel3D>("WheelBackRight");
     }
 
     public bool AreAllWheelsTouching()
     {
         // Vérifie si toutes les roues touchent une surface
-        return frontLeftWheel.IsInContact() &&
-               frontRightWheel.IsInContact() &&
+        return FrontLeftWheel.IsInContact() &&
+               FrontRightWheel.IsInContact() &&
                backLeftWheel.IsInContact() &&
-               backRightWheel.IsInContact();
+               BackRightWheel.IsInContact();
     }
 
     public bool AreAllWheeNotTouching()
     {
         // Vérifie si toutes les roues touchent une surface
-        return ! frontLeftWheel.IsInContact() &&
-               ! frontRightWheel.IsInContact() &&
+        return ! FrontLeftWheel.IsInContact() &&
+               ! FrontRightWheel.IsInContact() &&
                ! backLeftWheel.IsInContact() &&
-               ! backRightWheel.IsInContact();
+               ! BackRightWheel.IsInContact();
     }
 
     public override void _PhysicsProcess(double delta)
@@ -53,11 +54,18 @@ public partial class Car : VehicleBody3D
         EngineForce = (Input.GetActionStrength("move_forward") - Input.GetActionStrength("move_backward")) * Power;
 
         // Si on est en train de freiner
-        bool IsBraking = Input.IsActionJustPressed("brake");
+        bool IsBraking = Input.IsActionPressed("brake");
         if(IsBraking)
         {
             Brake = BreakForce;
-            ApplyDrift(delta);
+            backLeftWheel.WheelFrictionSlip = DriftFactor;
+            BackRightWheel.WheelFrictionSlip = DriftFactor;
+        }
+        else
+        {
+            Brake = 0;
+            backLeftWheel.WheelFrictionSlip = WheelFrictionDefault;
+            BackRightWheel.WheelFrictionSlip = WheelFrictionDefault;
         }
         // Contrôle dans les airs
         if (!AreAllWheelsTouching())
@@ -73,11 +81,6 @@ public partial class Car : VehicleBody3D
         CheckJumps();
     }
 
-    private void ApplyDrift(double delta)
-    {
-        // Modifie la traction /riftForce * (float)delta);
-    }
-
     private void AirControl(double delta)
     {
         // Entrées utilisateur pour la rotation
@@ -85,6 +88,10 @@ public partial class Car : VehicleBody3D
         float rollInput = Input.GetActionStrength("roll_right") - Input.GetActionStrength("roll_left");
         float yawInput = Input.GetActionStrength("turn_left") - Input.GetActionStrength("turn_right");
 
+        if(pitchInput != 0 || rollInput != 0 || yawInput != 0)
+        {
+            //AngularVelocity = Vector3.Zero;
+        }
         RotateObjectLocal(Vector3.Forward, rollInput * AirRotationSpeed * (float)delta);
         RotateObjectLocal(Vector3.ModelRight, pitchInput * AirRotationSpeed * (float)delta);
         if(AreAllWheeNotTouching())

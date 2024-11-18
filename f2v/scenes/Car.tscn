@@ -19,23 +19,29 @@ bottom_radius = 0.3
 [node name="Car" type="VehicleBody3D"]
 collision_layer = 3
 mass = 100.0
+center_of_mass_mode = 1
 script = ExtResource("1_ejhll")
 Power = 300.0
+MaxSteer = 0.5
 TurnSpeed = 5.0
 JumpForce = 500.0
+DriftFactor = 1.0
 
 [node name="CarBody" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.32831e-10, -2.32831e-10, -4.65661e-10)
+transform = Transform3D(1.04838, 0, 0, 0, 0.425374, 0, 0, 0, 1, 2.32831e-10, -2.32831e-10, -4.65661e-10)
 mesh = SubResource("BoxMesh_spwb1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.32831e-10, -2.32831e-10, -4.65661e-10)
+transform = Transform3D(1.04838, 0, 0, 0, 0.425374, 0, 0, 0, 1, 2.32831e-10, -2.32831e-10, -4.65661e-10)
 shape = SubResource("ConvexPolygonShape3D_ng7ik")
 
 [node name="WheelBackRight" type="VehicleWheel3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.718, -0.4, 0.9)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0, 1)
 use_as_traction = true
+wheel_roll_influence = 1.0
 wheel_radius = 0.3
+wheel_rest_length = 0.1
+wheel_friction_slip = 10.0
 suspension_travel = 5.0
 suspension_stiffness = 200.0
 suspension_max_force = 10000.0
@@ -47,9 +53,12 @@ transform = Transform3D(-4.37114e-08, -0.2, 0, 1, -8.74228e-09, 0, -2.5411e-21, 
 mesh = SubResource("CylinderMesh_os6dx")
 
 [node name="WheelBackLeft" type="VehicleWheel3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.717795, -0.4, 0.9)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1, 0, 1)
 use_as_traction = true
+wheel_roll_influence = 1.0
 wheel_radius = 0.3
+wheel_rest_length = 0.1
+wheel_friction_slip = 10.0
 suspension_travel = 5.0
 suspension_stiffness = 200.0
 suspension_max_force = 10000.0
@@ -61,10 +70,13 @@ transform = Transform3D(-4.34785e-08, -0.198935, 0, 0.994673, -8.69571e-09, 0, -
 mesh = SubResource("CylinderMesh_os6dx")
 
 [node name="WheelFrontRight" type="VehicleWheel3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.707, -0.4, -0.9)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0, -1)
 use_as_traction = true
 use_as_steering = true
+wheel_roll_influence = 1.0
 wheel_radius = 0.3
+wheel_rest_length = 0.1
+wheel_friction_slip = 10.0
 suspension_travel = 5.0
 suspension_stiffness = 200.0
 suspension_max_force = 10000.0
@@ -76,10 +88,13 @@ transform = Transform3D(-4.37114e-08, -0.2, 0, 1, -8.74228e-09, 0, 0, 0, 1, 0, 0
 mesh = SubResource("CylinderMesh_os6dx")
 
 [node name="WheelFrontLeft" type="VehicleWheel3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.702, -0.4, -0.9)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1, 0, -1)
 use_as_traction = true
 use_as_steering = true
+wheel_roll_influence = 1.0
 wheel_radius = 0.3
+wheel_rest_length = 0.1
+wheel_friction_slip = 10.0
 suspension_travel = 5.0
 suspension_stiffness = 200.0
 suspension_max_force = 10000.0
