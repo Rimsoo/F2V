@@ -8,6 +8,7 @@ public partial class Car : VehicleBody3D
     [Export] public float TurnSpeed = 3.0f; // Vitesse de rotation
     [Export] public float BreakForce = 10.0f; // Force de freinage
     [Export] public float JumpForce = 300.0f; // Force de saut
+    [Export] public float BoostForce = 50.0f; // Force de saut
     [Export] public float FlipForce = 0.1f;
     [Export] public float AirRotationSpeed = 6.0f; // Vitesse de rotation dans les airs
     [Export] public float BackDriftFactor = 0.3f; // Facteur de drift
@@ -64,6 +65,39 @@ public partial class Car : VehicleBody3D
         EngineForce = (Input.GetActionStrength("move_forward") - Input.GetActionStrength("move_backward")) * Power;
         
         // Si on est en train de freiner
+        CheckBreak(delta);
+        // Contrôle dans les airs
+        if (!AreAllWheelsTouching())
+        {
+            AirControl(delta);
+        }
+        else
+        {
+            // Réinitialise le double saut
+            CanDoubleJump = true;
+        }
+
+        CheckJumps();
+
+        CheckBoost();
+    }
+
+    private void CheckBoost()
+    {
+        if (Input.IsActionPressed("boost"))
+        {
+            // Utiliser la direction avant (local) de l'objet, puis la transformer en global
+            Vector3 directionForward = -Transform.Basis.Z.Normalized(); // Direction "avant" de l'objet (en local)
+            
+            // Appliquer l'impulsion dans cette direction globalisée
+            ApplyImpulse(directionForward * BoostForce);
+        }
+    }
+
+
+
+    private void CheckBreak(double delta)
+    {
         bool IsBraking = Input.IsActionPressed("brake");
         if(IsBraking)
         {
@@ -81,19 +115,8 @@ public partial class Car : VehicleBody3D
             FrontLeftWheel.WheelFrictionSlip = WheelFrictionDefault;
             FrontRightWheel.WheelFrictionSlip = WheelFrictionDefault;
         }
-        // Contrôle dans les airs
-        if (!AreAllWheelsTouching())
-        {
-            AirControl(delta);
-        }
-        else
-        {
-            // Réinitialise le double saut
-            CanDoubleJump = true;
-        }
-
-        CheckJumps();
     }
+
 
     private void AirControl(double delta)
     {
