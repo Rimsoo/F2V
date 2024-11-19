@@ -8,15 +8,21 @@ public partial class Car : VehicleBody3D
     [Export] public float TurnSpeed = 3.0f; // Vitesse de rotation
     [Export] public float BreakForce = 10.0f; // Force de freinage
     [Export] public float JumpForce = 300.0f; // Force de saut
+    [Export] public float FlipForce = 0.1f;
     [Export] public float AirRotationSpeed = 6.0f; // Vitesse de rotation dans les airs
-    [Export] public float DriftFactor = 0.3f; // Facteur de drift
+    [Export] public float BackDriftFactor = 0.3f; // Facteur de drift
+    [Export] public float FrontDriftFactor = 2.0f; // Facteur de drift
     [Export] public float DriftTurnSpeed = 1.5f; // Multiplicateur de vitesse de direction pendant le drift
     [Export] public float WheelFrictionDefault = 10.5f; // Multiplicateur de puissance pendant le drift
 
     private VehicleWheel3D FrontLeftWheel;
     private VehicleWheel3D FrontRightWheel;
-    private VehicleWheel3D backLeftWheel;
+    private VehicleWheel3D BackLeftWheel;
     private VehicleWheel3D BackRightWheel;
+
+    private float PitchInput = 0.0f;
+    private float RollInput = 0.0f;
+    private float YawInput = 0.0f;
 
     private bool CanDoubleJump = false;
 
@@ -25,7 +31,7 @@ public partial class Car : VehicleBody3D
         // Récupère chaque roue
         FrontLeftWheel = GetNode<VehicleWheel3D>("WheelFrontLeft");
         FrontRightWheel = GetNode<VehicleWheel3D>("WheelFrontRight");
-        backLeftWheel = GetNode<VehicleWheel3D>("WheelBackLeft");
+        BackLeftWheel = GetNode<VehicleWheel3D>("WheelBackLeft");
         BackRightWheel = GetNode<VehicleWheel3D>("WheelBackRight");
     }
 
@@ -34,7 +40,7 @@ public partial class Car : VehicleBody3D
         // Vérifie si toutes les roues touchent une surface
         return FrontLeftWheel.IsInContact() &&
                FrontRightWheel.IsInContact() &&
-               backLeftWheel.IsInContact() &&
+               BackLeftWheel.IsInContact() &&
                BackRightWheel.IsInContact();
     }
 
@@ -43,14 +49,18 @@ public partial class Car : VehicleBody3D
         // Vérifie si toutes les roues touchent une surface
         return ! FrontLeftWheel.IsInContact() &&
                ! FrontRightWheel.IsInContact() &&
-               ! backLeftWheel.IsInContact() &&
+               ! BackLeftWheel.IsInContact() &&
                ! BackRightWheel.IsInContact();
     }
 
     public override void _PhysicsProcess(double delta)
     {
+        // Entrées utilisateur pour la rotation
+        PitchInput = Input.GetActionStrength("turn_up") - Input.GetActionStrength("turn_down");
+        RollInput = Input.GetActionStrength("roll_right") - Input.GetActionStrength("roll_left");
+        YawInput = Input.GetActionStrength("turn_left") - Input.GetActionStrength("turn_right");
         // Gestion de la direction et de la force moteur
-        Steering = Mathf.MoveToward(Steering, (Input.GetActionStrength("turn_left") - Input.GetActionStrength("turn_right")) * MaxSteer, (float)delta * 10);
+        Steering = Mathf.MoveToward(Steering, YawInput * MaxSteer, (float)delta * 10);
         EngineForce = (Input.GetActionStrength("move_forward") - Input.GetActionStrength("move_backward")) * Power;
         
         // Si on est en train de freiner
@@ -58,14 +68,18 @@ public partial class Car : VehicleBody3D
         if(IsBraking)
         {
             Brake = BreakForce;
-            backLeftWheel.WheelFrictionSlip = DriftFactor;
-            BackRightWheel.WheelFrictionSlip = DriftFactor;
+            BackLeftWheel.WheelFrictionSlip = BackDriftFactor;
+            BackRightWheel.WheelFrictionSlip = BackDriftFactor;
+            FrontLeftWheel.WheelFrictionSlip = FrontDriftFactor;
+            FrontRightWheel.WheelFrictionSlip = FrontDriftFactor;
         }
         else
         {
             Brake = 0;
-            backLeftWheel.WheelFrictionSlip = WheelFrictionDefault;
+            BackLeftWheel.WheelFrictionSlip = WheelFrictionDefault;
             BackRightWheel.WheelFrictionSlip = WheelFrictionDefault;
+            FrontLeftWheel.WheelFrictionSlip = WheelFrictionDefault;
+            FrontRightWheel.WheelFrictionSlip = WheelFrictionDefault;
         }
         // Contrôle dans les airs
         if (!AreAllWheelsTouching())
@@ -83,19 +97,14 @@ public partial class Car : VehicleBody3D
 
     private void AirControl(double delta)
     {
-        // Entrées utilisateur pour la rotation
-        float pitchInput = Input.GetActionStrength("turn_up") - Input.GetActionStrength("turn_down");
-        float rollInput = Input.GetActionStrength("roll_right") - Input.GetActionStrength("roll_left");
-        float yawInput = Input.GetActionStrength("turn_left") - Input.GetActionStrength("turn_right");
-
-        if(pitchInput != 0 || rollInput != 0 || yawInput != 0)
+        if(PitchInput != 0 || RollInput != 0 || YawInput != 0)
         {
             //AngularVelocity = Vector3.Zero;
         }
-        RotateObjectLocal(Vector3.Forward, rollInput * AirRotationSpeed * (float)delta);
-        RotateObjectLocal(Vector3.ModelRight, pitchInput * AirRotationSpeed * (float)delta);
+        RotateObjectLocal(Vector3.Forward, RollInput * AirRotationSpeed * (float)delta);
+        RotateObjectLocal(Vector3.ModelRight, PitchInput * AirRotationSpeed * (float)delta);
         if(AreAllWheeNotTouching())
-            RotateObjectLocal(Vector3.Up, yawInput * AirRotationSpeed * (float)delta);
+            RotateObjectLocal(Vector3.Up, YawInput * AirRotationSpeed * (float)delta);
     }
 
     private void CheckJumps()
@@ -106,8 +115,15 @@ public partial class Car : VehicleBody3D
             ApplyImpulse(Vector3.Up * JumpForce);
         } 
         else if (Input.IsActionJustPressed("jump") && CanDoubleJump )
-        {
-            ApplyImpulse(Vector3.Up * JumpForce);
+        {   Vector3 direction = new(RollInput + YawInput, AngularVelocity.Y, PitchInput);
+            // Transformation en global en utilisant la base de la voiture
+            Vector3 globalDirection = ToGlobal(direction);
+
+            // Appliquer l'impulsion en fonction de la direction calculée
+            if(YawInput != 0 || PitchInput != 0 || RollInput != 0)
+                ApplyImpulse(globalDirection.Normalized() * JumpForce);
+            else
+                ApplyImpulse(Vector3.Up * JumpForce);
             CanDoubleJump = false;
         }
     }

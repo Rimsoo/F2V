@@ -16,6 +16,7 @@ public partial class Player : CharacterBody3D
     private Node3D CarPivot;
     private Node3D Ball;
     private Camera3D Camera;
+    private float CameraAngle = 0.0f;
 
 
     public override void _Ready()
@@ -33,9 +34,6 @@ public partial class Player : CharacterBody3D
     {
         Ball.ForceUpdateTransform();
 
-    GD.Print("Balle Position locale : ", Ball.Position);
-    GD.Print("Balle Transform globale : ", Ball.GlobalTransform);
-    GD.Print("Balle Type : ", Ball.GetType());
         // Contrôle de la caméra avec le joystick droit
         float cameraHorizontal = Input.GetActionStrength("camera_right") - Input.GetActionStrength("camera_left");
         CarPivot.GlobalPosition = Car.GlobalPosition;
@@ -43,9 +41,9 @@ public partial class Player : CharacterBody3D
         if(cameraHorizontal != 0) 
         {
             // Rotation de la caméra avec limitation de l'angle
-            float newCameraRotation = CarPivot.GlobalRotation.Y - cameraHorizontal * CameraSensitivity;
+            float newCameraRotation = cameraHorizontal * CameraSensitivity - CameraAngle;
             newCameraRotation = Mathf.Clamp(newCameraRotation, -Mathf.DegToRad(MaxCameraAngle), Mathf.DegToRad(MaxCameraAngle));
-            CarPivot.GlobalRotation = new Vector3(CarPivot.GlobalRotation.X, newCameraRotation, CarPivot.GlobalRotation.Z);
+            CarPivot.Rotation -= new Vector3(0, newCameraRotation, 0);
             return;
         } 
 
@@ -66,5 +64,6 @@ public partial class Player : CharacterBody3D
                 0
             );
         }
+        CameraAngle = Mathf.RadToDeg(Camera.Rotation.Y);
     }
 }

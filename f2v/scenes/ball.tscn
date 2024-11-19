@@ -1,18 +1,13 @@
-[gd_scene load_steps=7 format=4 uid="uid://bm3noegm6petk"]
+[gd_scene load_steps=6 format=4 uid="uid://bm3noegm6petk"]
 
 [ext_resource type="Texture2D" uid="uid://dgiiyr22qd57h" path="res://assets/dirty_football_diff.jpg" id="1_hq3ti"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_f12mv"]
-resource_local_to_scene = true
-friction = 0.0
-rough = true
-bounce = 0.6
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xnlsh"]
 resource_name = "dirty_football"
 cull_mode = 2
 albedo_texture = ExtResource("1_hq3ti")
 roughness = 0.0764706
+heightmap_scale = 0.0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_vvaqw"]
 _surfaces = [{
@@ -48,18 +43,17 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_vvaqw")
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_0sorj"]
-radius = 10.0
+[sub_resource type="SphereShape3D" id="SphereShape3D_i1vib"]
+radius = 2.0
 
 [node name="Ball" type="RigidBody3D"]
 collision_layer = 2
 collision_mask = 2
-physics_material_override = SubResource("PhysicsMaterial_f12mv")
 
 [node name="dirty_football_LOD1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.83053, 0, 0, 0, 1.82837, 0, 0, 0, 1.81667, 0, 0.0873158, -0.0327485)
 mesh = SubResource("ArrayMesh_adsmn")
 skeleton = NodePath("")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.111, 0, 0, 0, 0.111, 0, 0, 0, 0.111, 0.0108745, -0.0466154, 0.0181292)
-shape = SubResource("SphereShape3D_0sorj")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_i1vib")

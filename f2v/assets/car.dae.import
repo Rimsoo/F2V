@@ -32,22 +32,24 @@ animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={
+"meshes": {
+"Cube.001": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": true,
+"save_to_file/path": ""
+}
+},
 "nodes": {
 "PATH:AnimationPlayer": {
-"import/skip_import": true
-},
-"PATH:Camera": {
-"import/skip_import": true
-},
-"PATH:Cube": {
 "import/skip_import": true
 },
 "PATH:Cube_001": {
 "generate/physics": true,
 "physics/body_type": 1
-},
-"PATH:Light": {
-"import/skip_import": true
 }
 }
 }
