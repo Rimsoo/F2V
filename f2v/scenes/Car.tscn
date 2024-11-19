@@ -98,7 +98,7 @@ damping_compression = 1.9
 damping_relaxation = 2.0
 
 [node name="WheelBackRightMesh" type="MeshInstance3D" parent="WheelBackRight"]
-transform = Transform3D(-4.37114e-08, -0.2, 0, 1, -8.74228e-09, 0, -2.5411e-21, 4.08562e-14, 1, 0, 0, 0)
+transform = Transform3D(-4.40438e-08, -0.151141, 2.06057e-13, 1.00761, -6.60658e-09, 1.15577e-20, -2.96462e-21, 3.10862e-14, 1.00761, 0.184762, 0, -0.00760543)
 mesh = SubResource("CylinderMesh_os6dx")
 
 [node name="WheelBackLeft" type="VehicleWheel3D" parent="."]
@@ -115,7 +115,7 @@ damping_compression = 1.9
 damping_relaxation = 2.0
 
 [node name="WheelBackLeftMesh" type="MeshInstance3D" parent="WheelBackLeft"]
-transform = Transform3D(-4.34785e-08, -0.198935, 0, 0.994673, -8.69571e-09, 0, -2.11758e-21, 4.61853e-14, 0.994673, 0, 0, 0)
+transform = Transform3D(-4.37114e-08, -0.15, 2.2842e-13, 1, -6.55671e-09, 1.21135e-20, -2.12891e-21, 3.4263e-14, 1, -0.184762, 0, 0)
 mesh = SubResource("CylinderMesh_os6dx")
 
 [node name="WheelFrontRight" type="VehicleWheel3D" parent="."]
@@ -133,7 +133,7 @@ damping_compression = 1.9
 damping_relaxation = 2.0
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="WheelFrontRight"]
-transform = Transform3D(-4.37114e-08, -0.2, 0, 1, -8.74228e-09, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(-4.40438e-08, -0.151141, 0, 1.00761, -6.60658e-09, 0, 0, 0, 1.00761, 0.184763, 0, 0.00760537)
 mesh = SubResource("CylinderMesh_os6dx")
 
 [node name="WheelFrontLeft" type="VehicleWheel3D" parent="."]
@@ -151,5 +151,5 @@ damping_compression = 1.9
 damping_relaxation = 2.0
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="WheelFrontLeft"]
-transform = Transform3D(-4.37114e-08, -0.2, 0, 1, -8.74228e-09, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(-4.37114e-08, -0.15, 0, 1, -6.55671e-09, 0, 0, 0, 1, -0.184762, 0, 0)
 mesh = SubResource("CylinderMesh_os6dx")
