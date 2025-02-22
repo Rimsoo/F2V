@@ -1,0 +1,73 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1plua2pq2ca7"]
+
+[ext_resource type="Script" path="res://scripts/Menu.cs" id="1_p0gy6"]
+[ext_resource type="Script" path="res://scripts/ControlsMenu.cs" id="2_1qy4r"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p0gy6")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainMenu" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Controls" type="Button" parent="CenterContainer/MainMenu"]
+layout_mode = 2
+text = "Controls"
+
+[node name="Quit" type="Button" parent="CenterContainer/MainMenu"]
+layout_mode = 2
+text = "Quit"
+
+[node name="ControlsMenu" type="GridContainer" parent="CenterContainer"]
+visible = false
+layout_mode = 2
+columns = 2
+script = ExtResource("2_1qy4r")
+
+[node name="Label3" type="Label" parent="CenterContainer/ControlsMenu"]
+layout_mode = 2
+
+[node name="WaitContainer" type="VBoxContainer" parent="CenterContainer/ControlsMenu"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="WaitInput" type="Label" parent="CenterContainer/ControlsMenu/WaitContainer"]
+visible = false
+layout_mode = 2
+text = "Press a button or ESC to cancel"
+
+[node name="Label" type="Label" parent="CenterContainer/ControlsMenu"]
+layout_mode = 2
+text = "Forward"
+
+[node name="Fw" type="Button" parent="CenterContainer/ControlsMenu" groups=["menu_buttons"]]
+layout_mode = 2
+text = "Change
+"
+metadata/action_name = "move_forward"
+
+[node name="Label2" type="Label" parent="CenterContainer/ControlsMenu"]
+layout_mode = 2
+text = "Backward"
+
+[node name="Bw" type="Button" parent="CenterContainer/ControlsMenu" groups=["menu_buttons"]]
+layout_mode = 2
+text = "Change
+"
+metadata/action_name = "move_backward"
+
+[connection signal="pressed" from="CenterContainer/MainMenu/Controls" to="." method="OnControlsPressed"]
+[connection signal="pressed" from="CenterContainer/MainMenu/Quit" to="." method="OnQuitButtonPressed"]

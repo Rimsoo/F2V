@@ -56,6 +56,12 @@ public partial class Car : VehicleBody3D
 
     public override void _PhysicsProcess(double delta)
     {
+
+		if(GetTree().GetNodesInGroup("Menu")[0] is Control Menu && Menu.Visible)
+        {
+            return;
+        }
+
         // Entrées utilisateur pour la rotation
         PitchInput = Input.GetActionStrength("turn_up") - Input.GetActionStrength("turn_down");
         RollInput = Input.GetActionStrength("roll_right") - Input.GetActionStrength("roll_left");
