@@ -1,68 +1,117 @@
-using Godot;
 using System;
+using Godot;
 
 public partial class ControlsMenu : GridContainer
 {
-	// Called when the node enters the scene tree for the first time.
-	private Label _waitForKeyLabel;
-	private bool isWaitingForKey;
-	private string actionToRebind;
-	private Button _pressedButton;
+    // Called when the node enters the scene tree for the first time.
+    private Label _waitForKeyLabel;
+    private bool isWaitingForKey;
+    private string actionToRebind;
+    private Button _pressedButton;
 
-	public override void _Ready()
-	{
-		_waitForKeyLabel = GetNode<Label>("WaitContainer/WaitInput");
-		_waitForKeyLabel.Visible = false;
+    public override void _Ready()
+    {
+        _waitForKeyLabel = GetNode<Label>("WaitContainer/WaitInput");
+        _waitForKeyLabel.Visible = false;
 
-		foreach (Button button in GetTree().GetNodesInGroup("menu_buttons"))
-		{
-			button.Pressed += () => ButtonClicked(button);
-		}
-	}
+        foreach (Button button in GetTree().GetNodesInGroup("menu_buttons"))
+        {
+            button.Pressed += () => ButtonClicked(button);
+        }
+    }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-		_waitForKeyLabel.Visible = isWaitingForKey;		
-	}
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
+    {
+        _waitForKeyLabel.Visible = isWaitingForKey;
+    }
 
-	public void ButtonClicked(Button pressedButton)
-	{
-		if(!pressedButton.HasMeta("action_name")){
-			return;
-		}
-			
-		// Récupère l'action stockée dans les Metadata
-		actionToRebind = (string)pressedButton.GetMeta("action_name");
+    public void ButtonClicked(Button pressedButton)
+    {
+        if (!pressedButton.HasMeta("action_name"))
+        {
+            return;
+        }
 
-		isWaitingForKey = true;
-		_waitForKeyLabel.Visible = true;
-		_pressedButton = pressedButton;
-	}
+        // Récupère l'action stockée dans les Metadata
+        actionToRebind = (string)pressedButton.GetMeta("action_name");
 
-	public override void _Input(InputEvent @event)
-	{
-		if (!isWaitingForKey) return; // Ne bloque que si on attend un input
+        isWaitingForKey = true;
+        _waitForKeyLabel.Visible = true;
+        _pressedButton = pressedButton;
+    }
 
-		// Bloque les autres inputs
-		GetViewport().SetInputAsHandled();
+    // Dans ControlsMenu.cs
+    public override void _Input(InputEvent @event)
+    {
+        if (!isWaitingForKey)
+            return;
 
-		// Annulation avec Échap
-		if (Input.IsActionJustPressed("ui_cancel"))
-		{
-			isWaitingForKey = false;
-			_waitForKeyLabel.Visible = false;
-		}
+        GetViewport().SetInputAsHandled(); // Bloquer la propagation
 
-		if (@event is InputEvent keyEvent && keyEvent.IsPressed())
-		{
-			InputMap.ActionEraseEvents(actionToRebind);
-			InputMap.ActionAddEvent(actionToRebind, keyEvent);
+        // Annulation avec Échap
+        if (@event.IsActionPressed("ui_cancel"))
+        {
+            isWaitingForKey = false;
+            _waitForKeyLabel.Visible = false;
+            return;
+        }
 
-			_pressedButton.Text = keyEvent.AsText();
+        bool eventHandled = false;
 
-			isWaitingForKey = false;
-			_waitForKeyLabel.Visible = false;
-		}
-	}
+        // Gestion des touches et manettes
+        if (@event is InputEventKey keyEvent && keyEvent.IsPressed())
+        {
+            RebindAction(keyEvent);
+            eventHandled = true;
+        }
+        else if (@event is InputEventJoypadMotion motionEvent)
+        {
+            // Seuil pour éviter les faux positifs
+            if (Mathf.Abs(motionEvent.AxisValue) > 0.5f)
+            {
+                // Créer un nouvel événement d'axe avec une valeur neutre
+                var newMotionEvent = new InputEventJoypadMotion
+                {
+                    Axis = motionEvent.Axis,
+                    AxisValue = motionEvent.AxisValue > 0 ? 1f : -1f, // Forcer une valeur neutre (1 ou -1)
+                };
+                RebindAction(newMotionEvent, GetAxisString(newMotionEvent));
+                eventHandled = true;
+
+                GD.Print("Joypad motion event");
+                GD.Print(motionEvent.AxisValue);
+            }
+        }
+        else if (@event is InputEventJoypadButton joypadButton && joypadButton.IsPressed())
+        {
+            RebindAction(joypadButton);
+            eventHandled = true;
+        }
+
+        if (eventHandled)
+        {
+            isWaitingForKey = false;
+            _waitForKeyLabel.Visible = false;
+        }
+    }
+
+    private void RebindAction(InputEvent @event, string eventText)
+    {
+        InputMap.ActionEraseEvents(actionToRebind);
+        InputMap.ActionAddEvent(actionToRebind, @event);
+        _pressedButton.Text = eventText;
+    }
+
+    private void RebindAction(InputEvent @event)
+    {
+        RebindAction(@event, @event.AsText());
+    }
+
+    // Ajouter cette méthode dans ControlsMenu
+    private string GetAxisString(InputEventJoypadMotion motionEvent)
+    {
+        // Exemple : Convertir l'axe en texte lisible
+        return $"Axe {motionEvent.Axis}";
+    }
 }
