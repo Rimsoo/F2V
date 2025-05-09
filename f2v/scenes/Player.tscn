@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dnqpp0x1tcky6"]
 
-[ext_resource type="Script" path="res://scripts/Player.cs" id="1_afwq0"]
+[ext_resource type="Script" uid="uid://cewooyq0nco5m" path="res://scripts/Player.cs" id="1_afwq0"]
 [ext_resource type="PackedScene" uid="uid://c4djv18omplw5" path="res://scenes/Car.tscn" id="2_iyx2u"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_hmopb"]

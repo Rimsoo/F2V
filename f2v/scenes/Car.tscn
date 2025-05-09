@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=4 uid="uid://c4djv18omplw5"]
 
-[ext_resource type="Script" path="res://scripts/Car.cs" id="1_ejhll"]
+[ext_resource type="Script" uid="uid://dph85htr0d3jm" path="res://scripts/Car.cs" id="1_ejhll"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_01vte"]
 resource_name = "Material.001"

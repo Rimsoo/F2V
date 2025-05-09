@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://d1plua2pq2ca7"]
+[gd_scene load_steps=4 format=3 uid="uid://d1plua2pq2ca7"]
 
-[ext_resource type="Script" path="res://scripts/Menu.cs" id="1_p0gy6"]
-[ext_resource type="Script" path="res://scripts/ControlsMenu.cs" id="2_1qy4r"]
+[ext_resource type="Script" uid="uid://53mnsxnfdklv" path="res://scripts/menu/Menu.cs" id="1_p0gy6"]
+[ext_resource type="Script" uid="uid://biomj3vjoos4p" path="res://scripts/menu/ControlsMenu.cs" id="2_1qy4r"]
+[ext_resource type="Script" uid="uid://kp2nk428bytt" path="res://scripts/menu/LanMenu.cs" id="3_11y2r"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -26,6 +27,10 @@ layout_mode = 2
 [node name="Controls" type="Button" parent="CenterContainer/MainMenu"]
 layout_mode = 2
 text = "Controls"
+
+[node name="Lan" type="Button" parent="CenterContainer/MainMenu"]
+layout_mode = 2
+text = "Lan"
 
 [node name="Quit" type="Button" parent="CenterContainer/MainMenu"]
 layout_mode = 2
@@ -69,5 +74,42 @@ text = "Change
 "
 metadata/action_name = "move_backward"
 
+[node name="LanMenu" type="GridContainer" parent="CenterContainer"]
+visible = false
+layout_mode = 2
+columns = 2
+script = ExtResource("3_11y2r")
+
+[node name="Label" type="Label" parent="CenterContainer/LanMenu"]
+layout_mode = 2
+text = "IP"
+
+[node name="Ip" type="TextEdit" parent="CenterContainer/LanMenu"]
+custom_minimum_size = Vector2(100, 35)
+layout_mode = 2
+text = "127.0.0.1"
+metadata/action_name = "move_forward"
+
+[node name="Label2" type="Label" parent="CenterContainer/LanMenu"]
+layout_mode = 2
+text = "Port"
+
+[node name="Port" type="TextEdit" parent="CenterContainer/LanMenu"]
+custom_minimum_size = Vector2(100, 35)
+layout_mode = 2
+text = "93150
+"
+metadata/action_name = "move_backward"
+
+[node name="Host" type="Button" parent="CenterContainer/LanMenu"]
+layout_mode = 2
+text = "Host"
+
+[node name="Join" type="Button" parent="CenterContainer/LanMenu"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+text = "Join"
+
 [connection signal="pressed" from="CenterContainer/MainMenu/Controls" to="." method="OnControlsPressed"]
+[connection signal="pressed" from="CenterContainer/MainMenu/Lan" to="." method="OnLanPressed"]
 [connection signal="pressed" from="CenterContainer/MainMenu/Quit" to="." method="OnQuitButtonPressed"]

@@ -45,37 +45,37 @@ public partial class Car : VehicleBody3D
                BackRightWheel.IsInContact();
     }
 
-    public bool AreAllWheeNotTouching()
+    public bool AreAllWheelsNotTouching()
     {
         // Vérifie si toutes les roues touchent une surface
-        return ! FrontLeftWheel.IsInContact() &&
-               ! FrontRightWheel.IsInContact() &&
-               ! BackLeftWheel.IsInContact() &&
-               ! BackRightWheel.IsInContact();
+        return !FrontLeftWheel.IsInContact() &&
+               !FrontRightWheel.IsInContact() &&
+               !BackLeftWheel.IsInContact() &&
+               !BackRightWheel.IsInContact();
     }
 
     public override void _PhysicsProcess(double delta)
     {
-
-		if(GetTree().GetNodesInGroup("Menu")[0] is Control Menu && Menu.Visible)
+        if (GetTree().GetNodesInGroup("Menu")[0] is Control Menu && Menu.Visible)
         {
             return;
         }
 
         // Entrées utilisateur pour la rotation
         PitchInput = Input.GetActionStrength("turn_up") - Input.GetActionStrength("turn_down");
-        RollInput = Input.GetActionStrength("roll_right") - Input.GetActionStrength("roll_left");
+        RollInput = Input.GetActionStrength("roll_left") - Input.GetActionStrength("roll_right");
         YawInput = Input.GetActionStrength("turn_left") - Input.GetActionStrength("turn_right");
         // Gestion de la direction et de la force moteur
         Steering = Mathf.MoveToward(Steering, YawInput * MaxSteer, (float)delta * 10);
         EngineForce = (Input.GetActionStrength("move_forward") - Input.GetActionStrength("move_backward")) * Power;
-        
+
         // Si on est en train de freiner
         CheckBreak(delta);
         // Contrôle dans les airs
         if (!AreAllWheelsTouching())
         {
             AirControl(delta);
+            ApplyCentralForce(Vector3.Down * 5.0f); // Ajuste la valeur selon tes besoins
         }
         else
         {
@@ -94,7 +94,7 @@ public partial class Car : VehicleBody3D
         {
             // Utiliser la direction avant (local) de l'objet, puis la transformer en global
             Vector3 directionForward = -Transform.Basis.Z.Normalized(); // Direction "avant" de l'objet (en local)
-            
+
             // Appliquer l'impulsion dans cette direction globalisée
             ApplyImpulse(directionForward * BoostForce);
         }
@@ -105,7 +105,7 @@ public partial class Car : VehicleBody3D
     private void CheckBreak(double delta)
     {
         bool IsBraking = Input.IsActionPressed("brake");
-        if(IsBraking)
+        if (IsBraking)
         {
             Brake = BreakForce;
             BackLeftWheel.WheelFrictionSlip = BackDriftFactor;
@@ -123,18 +123,38 @@ public partial class Car : VehicleBody3D
         }
     }
 
-
     private void AirControl(double delta)
     {
-        if(PitchInput != 0 || RollInput != 0 || YawInput != 0)
+        float deltaTime = (float)delta;
+        // AngularVelocity *= 1.97f;
+
+        if (Mathf.Abs(PitchInput) > 0.1f || Mathf.Abs(RollInput) > 0.1f || Mathf.Abs(YawInput) > 0.1f)
         {
-            //AngularVelocity = Vector3.Zero;
+            var yawInput = AreAllWheelsNotTouching() ? YawInput * AirRotationSpeed * deltaTime : 0;
+            // Calculer le changement souhaité en vitesse angulaire (en espace local)
+            Vector3 localDelta = new Vector3(
+                PitchInput * AirRotationSpeed * deltaTime, // Pitch (X)
+                yawInput,  // Yaw (Y)
+                RollInput * AirRotationSpeed * deltaTime  // Roll (Z)
+            );
+
+            // Convertir le delta local en espace global
+            Vector3 globalDelta = Basis * localDelta;
+
+            // Appliquer le changement à la vélocité angulaire
+            AngularVelocity += globalDelta;
         }
-        RotateObjectLocal(Vector3.Forward, RollInput * AirRotationSpeed * (float)delta);
-        RotateObjectLocal(Vector3.ModelRight, PitchInput * AirRotationSpeed * (float)delta);
-        if(AreAllWheeNotTouching())
-            RotateObjectLocal(Vector3.Up, YawInput * AirRotationSpeed * (float)delta);
     }
+
+    // private void AirControl(double delta)
+    // {
+    //     RotateObjectLocal(Vector3.Forward, RollInput * AirRotationSpeed * (float)delta);
+    //     RotateObjectLocal(Vector3.ModelRight, PitchInput * AirRotationSpeed * (float)delta);
+    //     if (AreAllWheelsNotTouching())
+    //     {
+    //         RotateObjectLocal(Vector3.Up, YawInput * AirRotationSpeed * (float)delta);
+    //     }
+    // }
 
     private void CheckJumps()
     {
@@ -142,14 +162,15 @@ public partial class Car : VehicleBody3D
         if (Input.IsActionJustPressed("jump") && AreAllWheelsTouching())
         {
             ApplyImpulse(Vector3.Up * JumpForce);
-        } 
-        else if (Input.IsActionJustPressed("jump") && CanDoubleJump )
-        {   Vector3 direction = new(RollInput + YawInput, AngularVelocity.Y, PitchInput);
+        }
+        else if (Input.IsActionJustPressed("jump") && CanDoubleJump)
+        {
+            Vector3 direction = new(RollInput + YawInput, AngularVelocity.Y, PitchInput);
             // Transformation en global en utilisant la base de la voiture
             Vector3 globalDirection = ToGlobal(direction);
 
             // Appliquer l'impulsion en fonction de la direction calculée
-            if(YawInput != 0 || PitchInput != 0 || RollInput != 0)
+            if (YawInput != 0 || PitchInput != 0 || RollInput != 0)
                 ApplyImpulse(globalDirection.Normalized() * JumpForce);
             else
                 ApplyImpulse(Vector3.Up * JumpForce);

@@ -108,6 +108,15 @@ public partial class Menu : Control
         InitButtons();
     }
 
+    private void OnLanPressed()
+    {
+        _navigationContainers.Last().Visible = false;
+        _navigationContainers.Add(GetNode<Container>("CenterContainer/LanMenu"));
+        _navigationContainers.Last().Visible = true;
+
+        InitButtons();
+    }
+
     private void Focus(Button button)
     {
         _focusButton = button;
