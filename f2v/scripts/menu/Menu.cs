@@ -6,24 +6,40 @@ using Godot;
 public partial class Menu : Control
 {
     // Called when the node enters the scene tree for the first time.
-
-    private Button _focusButton;
-    private List<Button> _buttons;
     private List<Container> _navigationContainers = new();
 
     public override void _Ready()
     {
         // Select the first button nevermind which one is the 1st
         _navigationContainers.Add(GetNode<Container>("CenterContainer/MainMenu"));
-        InitButtons();
     }
 
-    private void InitButtons()
+    // Modifie InitButtons
+    public void InitButtons()
     {
-        _buttons = GetChildren<Button>();
-        _focusButton = _buttons[0];
+        _navigationContainers.Last().GetChildren().OfType<Button>().FirstOrDefault().GrabFocus();
     }
 
+    private Button GetFirstButton(Node node)
+    {
+        // Vérifier si le nœud actuel est un Button
+        if (node is Button button)
+        {
+            return button;
+        }
+
+        // Parcourir les enfants récursivement
+        foreach (Node child in node.GetChildren())
+        {
+            Button result = GetFirstButton(child);
+            if (result != null)
+            {
+                return result;
+            }
+        }
+
+        return null;
+    }
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
@@ -31,45 +47,11 @@ public partial class Menu : Control
         {
             return;
         }
-        Focus(_focusButton);
-
-        // Check if the user is pressing the up or down button
-        ButtonNavigation();
-
-        ButtonSelection();
 
         // Check if the user is pressing the back button
         if (Input.IsActionJustPressed("ui_cancel"))
         {
             OnBackButtonPressed();
-        }
-    }
-
-    private void ButtonSelection()
-    {
-        if (Input.IsActionJustPressed("ui_select"))
-        {
-            // Emit the signal of the focused button
-            _focusButton.EmitSignal("pressed");
-        }
-    }
-
-    private void ButtonNavigation()
-    {
-        if (Input.IsActionJustPressed("ui_up") || Input.IsActionJustPressed("ui_down"))
-        {
-            // Get the current index of the focused button + 1 or -1
-            int index =
-                _buttons.IndexOf(_focusButton) + (Input.IsActionJustPressed("ui_up") ? -1 : 1);
-
-            // If the next button is null, we are at the end of the list
-            if (index < 0 || index >= _buttons.Count)
-            {
-                return;
-            }
-
-            // Set the focus to the next button
-            Focus(_buttons[index]);
         }
     }
 
@@ -115,12 +97,6 @@ public partial class Menu : Control
         _navigationContainers.Last().Visible = true;
 
         InitButtons();
-    }
-
-    private void Focus(Button button)
-    {
-        _focusButton = button;
-        button.GrabFocus();
     }
 
     private void OnBackButtonPressed()
