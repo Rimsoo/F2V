@@ -33,7 +33,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MainMenu" type="VBoxContainer" parent="CenterContainer"]
-visible = false
 layout_mode = 2
 
 [node name="Game" type="Button" parent="CenterContainer/MainMenu"]
@@ -91,6 +90,7 @@ text = "Change
 metadata/action_name = "move_backward"
 
 [node name="LanMenu" type="GridContainer" parent="CenterContainer"]
+visible = false
 layout_mode = 2
 columns = 2
 script = ExtResource("3_11y2r")

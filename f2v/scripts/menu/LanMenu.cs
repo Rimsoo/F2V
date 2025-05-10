@@ -101,7 +101,8 @@ public partial class LanMenu : GridContainer
         {
             GD.Print("Disconnecting from server");
             Multiplayer.MultiplayerPeer.Close();
-            Multiplayer.MultiplayerPeer = null;
+            GameManager.Players.Clear();
+            RefreshPlayerList();
             _joinButton.Text = "Join";
             return;
         }

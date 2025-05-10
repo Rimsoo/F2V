@@ -27,6 +27,8 @@ public partial class Car : VehicleBody3D
 
     private bool CanDoubleJump = false;
 
+    private Vector3 BaseRotation;
+
     public override void _Ready()
     {
         // Récupère chaque roue
@@ -34,6 +36,8 @@ public partial class Car : VehicleBody3D
         FrontRightWheel = GetNode<VehicleWheel3D>("WheelFrontRight");
         BackLeftWheel = GetNode<VehicleWheel3D>("WheelBackLeft");
         BackRightWheel = GetNode<VehicleWheel3D>("WheelBackRight");
+
+        BaseRotation = RotationDegrees;
     }
 
     public bool AreAllWheelsTouching()
@@ -56,8 +60,7 @@ public partial class Car : VehicleBody3D
 
     public override void _PhysicsProcess(double delta)
     {
-        if (GetTree().GetNodesInGroup("Menu")[0] is Control Menu && Menu.Visible
-            || GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").GetMultiplayerAuthority() != Multiplayer.GetUniqueId())
+        if (GetTree().GetNodesInGroup("Menu")[0] is Control Menu && Menu.Visible)
         {
             return;
         }
@@ -93,15 +96,16 @@ public partial class Car : VehicleBody3D
     {
         if (Input.IsActionPressed("boost"))
         {
-            // Utiliser la direction avant (local) de l'objet, puis la transformer en global
-            Vector3 directionForward = -Transform.Basis.Z.Normalized(); // Direction "avant" de l'objet (en local)
+            // 1. Utiliser la direction avant LOCALE (toujours -Z dans l'espace local de la voiture)
+            Vector3 localDirection = Vector3.Forward; // Équivaut à new Vector3(0, 0, -1)
 
-            // Appliquer l'impulsion dans cette direction globalisée
-            ApplyImpulse(directionForward * BoostForce);
+            // 2. Convertir en direction globale
+            Vector3 globalDirection = GlobalTransform.Basis * localDirection;
+
+            // 3. Normaliser et appliquer
+            ApplyImpulse(globalDirection.Normalized() * BoostForce);
         }
     }
-
-
 
     private void CheckBreak(double delta)
     {

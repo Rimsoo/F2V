@@ -35,12 +35,12 @@ public partial class Game : Node3D
             Player currentPlayer = PlayerScene.Instantiate<Player>();
             currentPlayer.Name = GameManager.Players[i].Id.ToString();
             _players.AddChild(currentPlayer);
-
             foreach (Node3D spawnPoint in GetTree().GetNodesInGroup("PlayerSpawnPoints"))
             {
                 if (int.Parse(spawnPoint.Name) == i)
                 {
                     currentPlayer.GlobalPosition = spawnPoint.GlobalPosition;
+                    currentPlayer.GlobalRotation = spawnPoint.GlobalRotation;
                     break;
                 }
             }

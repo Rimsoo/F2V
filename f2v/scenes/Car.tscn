@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://c4djv18omplw5"]
+[gd_scene load_steps=9 format=4 uid="uid://c4djv18omplw5"]
 
 [ext_resource type="Script" uid="uid://dph85htr0d3jm" path="res://scripts/Car.cs" id="1_ejhll"]
 
@@ -53,14 +53,6 @@ albedo_color = Color(0.241156, 0.241156, 0.241156, 1)
 material = SubResource("StandardMaterial3D_aq3bd")
 top_radius = 0.3
 bottom_radius = 0.3
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_7u4s5"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath(".:rotation")
-properties/1/spawn = true
-properties/1/replication_mode = 1
 
 [node name="Car" type="VehicleBody3D"]
 collision_layer = 3
@@ -161,6 +153,3 @@ damping_relaxation = 2.0
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="WheelFrontLeft"]
 transform = Transform3D(-4.37114e-08, -0.15, 0, 1, -6.55671e-09, 0, 0, 0, 1, -0.184762, 0, 0)
 mesh = SubResource("CylinderMesh_os6dx")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_7u4s5")
