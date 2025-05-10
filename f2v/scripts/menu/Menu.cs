@@ -5,6 +5,7 @@ using Godot;
 
 public partial class Menu : Control
 {
+    private LanMenu LanMenu;
     private Button _startButton;
     private Button _lanButton;
 
@@ -15,6 +16,7 @@ public partial class Menu : Control
     {
         _startButton = GetNode<Button>("CenterContainer/MainMenu/Game");
         _lanButton = GetNode<Button>("CenterContainer/MainMenu/Lan");
+        LanMenu = GetNode<LanMenu>("CenterContainer/LanMenu");
         // Select the first button nevermind which one is the 1st
         _navigationContainers.Add(GetNode<Container>("CenterContainer/MainMenu"));
         InitButtons();
@@ -23,16 +25,29 @@ public partial class Menu : Control
     // Modifie InitButtons
     public void InitButtons()
     {
-        _navigationContainers.Last().GetChildren().OfType<Button>().FirstOrDefault().GrabFocus();
+        FocusFirstButtonInHierarchy(_navigationContainers.Last());
     }
-    private bool IsGameLoaded()
+
+    private void FocusFirstButtonInHierarchy(Node node)
     {
-        return GetTree().Root.GetChildren().OfType<Game>().Count() != 0;
+        foreach (var child in node.GetChildren())
+        {
+            if (child is Button button)
+            {
+                button.GrabFocus();
+                return;
+            }
+            else if (child is Container container)
+            {
+                FocusFirstButtonInHierarchy(container); // Récursion sur les enfants
+            }
+        }
     }
+
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
-        if (Input.IsActionJustPressed("game_menu") && IsGameLoaded())
+        if (Input.IsActionJustPressed("game_menu") && LanMenu.IsGameLoaded())
         {
             Visible = !Visible;
             InitButtons();
@@ -42,7 +57,7 @@ public partial class Menu : Control
         {
             if (_navigationContainers.Count == 1)
             {
-                if (IsGameLoaded())
+                if (LanMenu.IsGameLoaded())
                     Visible = false;
             }
             else
@@ -54,15 +69,13 @@ public partial class Menu : Control
             return;
         }
 
-        if (!IsGameLoaded())
+        if (!LanMenu.IsGameLoaded())
         {
             _startButton.Text = "Start";
-            _lanButton.Visible = false;
         }
         else
         {
             _startButton.Text = "Continue";
-            _lanButton.Visible = true;
         }
     }
 
@@ -89,19 +102,13 @@ public partial class Menu : Control
 
     private void _on_game_pressed()
     {
-        Rpc("StartGame");
-    }
-
-    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Unreliable)]
-    private void StartGame()
-    {
-        if (!IsGameLoaded())
+        GameManager.Players.Add(new PlayerInfo
         {
-            var game = ResourceLoader.Load<PackedScene>("res://scenes/Game.tscn").Instantiate<Node3D>();
-            GetTree().Root.AddChild(game);
-        }
-
-        this.Hide();
+            Name = "Player",
+            Id = 1
+        });
+        LanMenu.Start();
+        this.Visible = false;
     }
 
     private void OnQuitButtonPressed()

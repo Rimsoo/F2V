@@ -5,7 +5,7 @@
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_hmopb"]
 
-[node name="CharacterBody3D" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_afwq0")
 
 [node name="CarPivot" type="Node3D" parent="."]

@@ -15,6 +15,10 @@ run/main_scene="res://scenes/F2V.tscn"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameManager="*res://scripts/GameManager.cs"
+
 [display]
 
 window/size/viewport_width=1080
@@ -27,10 +31,15 @@ window/quality/msaa_3d=0
 
 project/assembly_name="F2V"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/spanning_table/plugin.cfg")
+
 [global_group]
 
 Ball="For the ball to be accessible for each player to lock camera"
 Menu="Contains menu"
+PlayerSpawnPoints=""
 
 [input]
 

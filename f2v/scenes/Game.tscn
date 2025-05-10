@@ -13,6 +13,7 @@ bounce = 0.6
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_u3f7l")
+PlayerScene = ExtResource("4_od6d7")
 
 [node name="Field" parent="." instance=ExtResource("2_lb8xn")]
 
@@ -26,5 +27,16 @@ light_color = Color(0.75, 0.672, 0.555, 1)
 light_energy = 2.0
 shadow_enabled = true
 
-[node name="Player" parent="." instance=ExtResource("4_od6d7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 10)
+[node name="PlayerSpawnPoints" type="Node3D" parent="."]
+
+[node name="0" type="Node3D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoints"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.84098, 23.131)
+
+[node name="1" type="Node3D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoints"]]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.83255, -46.4832)
+
+[node name="2" type="Node3D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoints"]]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -30.2941, 0, 0)
+
+[node name="3" type="Node3D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoints"]]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 18.69, 0, 0)
