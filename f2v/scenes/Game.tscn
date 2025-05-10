@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bm3noegm6petk" path="res://scenes/Ball.tscn" id="3_1fy2y"]
 [ext_resource type="PackedScene" uid="uid://dnqpp0x1tcky6" path="res://scenes/Player.tscn" id="4_od6d7"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cpr0p"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_78awf"]
 resource_local_to_scene = true
 friction = 0.0
 rough = true
@@ -18,7 +18,7 @@ script = ExtResource("1_u3f7l")
 
 [node name="Ball" parent="." groups=["Ball"] instance=ExtResource("3_1fy2y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.847, 0)
-physics_material_override = SubResource("PhysicsMaterial_cpr0p")
+physics_material_override = SubResource("PhysicsMaterial_78awf")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.537152, 0.843485, 0, -0.843485, 0.537152, 0, 7.49499, 0)

@@ -6,6 +6,7 @@ using Godot;
 public partial class Menu : Control
 {
     private Button _startButton;
+    private Button _lanButton;
 
     // Called when the node enters the scene tree for the first time.
     private List<Container> _navigationContainers = new();
@@ -13,6 +14,7 @@ public partial class Menu : Control
     public override void _Ready()
     {
         _startButton = GetNode<Button>("CenterContainer/MainMenu/Game");
+        _lanButton = GetNode<Button>("CenterContainer/MainMenu/Lan");
         // Select the first button nevermind which one is the 1st
         _navigationContainers.Add(GetNode<Container>("CenterContainer/MainMenu"));
         InitButtons();
@@ -23,34 +25,28 @@ public partial class Menu : Control
     {
         _navigationContainers.Last().GetChildren().OfType<Button>().FirstOrDefault().GrabFocus();
     }
-
-    private Button GetFirstButton(Node node)
+    private bool IsGameLoaded()
     {
-        // Vérifier si le nœud actuel est un Button
-        if (node is Button button)
-        {
-            return button;
-        }
-
-        // Parcourir les enfants récursivement
-        foreach (Node child in node.GetChildren())
-        {
-            Button result = GetFirstButton(child);
-            if (result != null)
-            {
-                return result;
-            }
-        }
-
-        return null;
+        return GetTree().Root.GetChildren().OfType<Game>().Count() != 0;
     }
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
-        if (Input.IsActionJustPressed("game_menu"))
+        if (Input.IsActionJustPressed("game_menu") && IsGameLoaded())
         {
-            this.Visible = !this.Visible;
+            Visible = !Visible;
             InitButtons();
+        }
+        // Check if the user is pressing the back button
+        else if (Input.IsActionJustPressed("ui_cancel"))
+        {
+            if (_navigationContainers.Count == 1)
+            {
+                if (IsGameLoaded())
+                    Visible = false;
+            }
+            else
+                OnBackButtonPressed();
         }
 
         if (!Visible)
@@ -58,15 +54,15 @@ public partial class Menu : Control
             return;
         }
 
-        if (GetTree().Root.GetChildren().OfType<Game>().Count() == 0)
-            _startButton.Text = "Start";
-        else
-            _startButton.Text = "Continue";
-
-        // Check if the user is pressing the back button
-        if (Input.IsActionJustPressed("ui_cancel"))
+        if (!IsGameLoaded())
         {
-            OnBackButtonPressed();
+            _startButton.Text = "Start";
+            _lanButton.Visible = false;
+        }
+        else
+        {
+            _startButton.Text = "Continue";
+            _lanButton.Visible = true;
         }
     }
 
@@ -93,7 +89,13 @@ public partial class Menu : Control
 
     private void _on_game_pressed()
     {
-        if (GetTree().Root.GetChildren().OfType<Game>().Count() == 0)
+        Rpc("StartGame");
+    }
+
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Unreliable)]
+    private void StartGame()
+    {
+        if (!IsGameLoaded())
         {
             var game = ResourceLoader.Load<PackedScene>("res://scenes/Game.tscn").Instantiate<Node3D>();
             GetTree().Root.AddChild(game);
@@ -127,12 +129,6 @@ public partial class Menu : Control
 
     private void OnBackButtonPressed()
     {
-        if (_navigationContainers.Count == 1)
-        {
-            Visible = false;
-            return;
-        }
-
         _navigationContainers.Last().Visible = false;
         _navigationContainers.RemoveAt(_navigationContainers.Count - 1);
         _navigationContainers.Last().Visible = true;

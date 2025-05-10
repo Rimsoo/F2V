@@ -131,9 +131,10 @@ public partial class Car : VehicleBody3D
         if (Mathf.Abs(PitchInput) > 0.1f || Mathf.Abs(RollInput) > 0.1f || Mathf.Abs(YawInput) > 0.1f)
         {
             var yawInput = AreAllWheelsNotTouching() ? YawInput * AirRotationSpeed * deltaTime : 0;
+            var pitchInput = AreAllWheelsNotTouching() ? PitchInput * AirRotationSpeed * deltaTime : 0;
             // Calculer le changement souhaité en vitesse angulaire (en espace local)
             Vector3 localDelta = new Vector3(
-                PitchInput * AirRotationSpeed * deltaTime, // Pitch (X)
+                pitchInput, // Pitch (X)
                 yawInput,  // Yaw (Y)
                 RollInput * AirRotationSpeed * deltaTime  // Roll (Z)
             );
