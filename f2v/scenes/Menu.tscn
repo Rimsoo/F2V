@@ -18,11 +18,19 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 4.0
+offset_right = 3.0
+offset_bottom = 4.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MainMenu" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
+
+[node name="Game" type="Button" parent="CenterContainer/MainMenu"]
+layout_mode = 2
+text = "Start"
 
 [node name="Controls" type="Button" parent="CenterContainer/MainMenu"]
 layout_mode = 2
@@ -97,8 +105,17 @@ text = "Port"
 [node name="Port" type="TextEdit" parent="CenterContainer/LanMenu"]
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
-text = "93150
-"
+text = "6040"
+metadata/action_name = "move_backward"
+
+[node name="Label3" type="Label" parent="CenterContainer/LanMenu"]
+layout_mode = 2
+text = "Max clients "
+
+[node name="MaxClients" type="TextEdit" parent="CenterContainer/LanMenu"]
+custom_minimum_size = Vector2(100, 35)
+layout_mode = 2
+text = "4"
 metadata/action_name = "move_backward"
 
 [node name="Host" type="Button" parent="CenterContainer/LanMenu"]
@@ -110,6 +127,7 @@ custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 text = "Join"
 
+[connection signal="pressed" from="CenterContainer/MainMenu/Game" to="." method="_on_game_pressed"]
 [connection signal="pressed" from="CenterContainer/MainMenu/Controls" to="." method="OnControlsPressed"]
 [connection signal="pressed" from="CenterContainer/MainMenu/Lan" to="." method="OnLanPressed"]
 [connection signal="pressed" from="CenterContainer/MainMenu/Quit" to="." method="OnQuitButtonPressed"]

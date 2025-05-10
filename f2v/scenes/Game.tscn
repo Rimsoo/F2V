@@ -1,12 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dfvlki83rryii"]
+[gd_scene load_steps=6 format=3 uid="uid://blwb2nbfulmyg"]
 
-[ext_resource type="Script" uid="uid://cbchx4r773n52" path="res://scripts/Game.cs" id="1_u3f7l"]
+[ext_resource type="Script" uid="uid://cjgtf2drdhxml" path="res://scripts/Game.cs" id="1_u3f7l"]
 [ext_resource type="PackedScene" uid="uid://cueb4nnmy3dci" path="res://scenes/Field.tscn" id="2_lb8xn"]
 [ext_resource type="PackedScene" uid="uid://bm3noegm6petk" path="res://scenes/Ball.tscn" id="3_1fy2y"]
 [ext_resource type="PackedScene" uid="uid://dnqpp0x1tcky6" path="res://scenes/Player.tscn" id="4_od6d7"]
-[ext_resource type="PackedScene" uid="uid://d1plua2pq2ca7" path="res://scenes/Menu.tscn" id="5_1x3xn"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_s0nni"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cpr0p"]
 resource_local_to_scene = true
 friction = 0.0
 rough = true
@@ -19,7 +18,7 @@ script = ExtResource("1_u3f7l")
 
 [node name="Ball" parent="." groups=["Ball"] instance=ExtResource("3_1fy2y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.847, 0)
-physics_material_override = SubResource("PhysicsMaterial_s0nni")
+physics_material_override = SubResource("PhysicsMaterial_cpr0p")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.537152, 0.843485, 0, -0.843485, 0.537152, 0, 7.49499, 0)
@@ -29,6 +28,3 @@ shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("4_od6d7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 10)
-
-[node name="Menu" parent="." groups=["Menu"] instance=ExtResource("5_1x3xn")]
-visible = false

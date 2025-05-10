@@ -5,13 +5,17 @@ using Godot;
 
 public partial class Menu : Control
 {
+    private Button _startButton;
+
     // Called when the node enters the scene tree for the first time.
     private List<Container> _navigationContainers = new();
 
     public override void _Ready()
     {
+        _startButton = GetNode<Button>("CenterContainer/MainMenu/Game");
         // Select the first button nevermind which one is the 1st
         _navigationContainers.Add(GetNode<Container>("CenterContainer/MainMenu"));
+        InitButtons();
     }
 
     // Modifie InitButtons
@@ -43,10 +47,21 @@ public partial class Menu : Control
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
+        if (Input.IsActionJustPressed("game_menu"))
+        {
+            this.Visible = !this.Visible;
+            InitButtons();
+        }
+
         if (!Visible)
         {
             return;
         }
+
+        if (GetTree().Root.GetChildren().OfType<Game>().Count() == 0)
+            _startButton.Text = "Start";
+        else
+            _startButton.Text = "Continue";
 
         // Check if the user is pressing the back button
         if (Input.IsActionJustPressed("ui_cancel"))
@@ -74,6 +89,17 @@ public partial class Menu : Control
             if (child.Visible)
                 GetChildrenRecursive<T>(child, children);
         }
+    }
+
+    private void _on_game_pressed()
+    {
+        if (GetTree().Root.GetChildren().OfType<Game>().Count() == 0)
+        {
+            var game = ResourceLoader.Load<PackedScene>("res://scenes/Game.tscn").Instantiate<Node3D>();
+            GetTree().Root.AddChild(game);
+        }
+
+        this.Hide();
     }
 
     private void OnQuitButtonPressed()

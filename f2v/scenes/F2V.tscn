@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfvlki83rryii"]
+
+[ext_resource type="Script" uid="uid://cbchx4r773n52" path="res://scripts/F2V.cs" id="1_l0n6w"]
+[ext_resource type="PackedScene" uid="uid://d1plua2pq2ca7" path="res://scenes/Menu.tscn" id="2_mueo6"]
+
+[node name="F2V" type="Node3D"]
+script = ExtResource("1_l0n6w")
+
+[node name="Menu" parent="." groups=["Menu"] instance=ExtResource("2_mueo6")]
