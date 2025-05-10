@@ -1,9 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://dnqpp0x1tcky6"]
+[gd_scene load_steps=5 format=3 uid="uid://dnqpp0x1tcky6"]
 
 [ext_resource type="Script" uid="uid://cewooyq0nco5m" path="res://scripts/Player.cs" id="1_afwq0"]
 [ext_resource type="PackedScene" uid="uid://c4djv18omplw5" path="res://scenes/Car.tscn" id="2_iyx2u"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_hmopb"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_v6fml"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_afwq0")
@@ -21,3 +26,6 @@ mesh = SubResource("CylinderMesh_hmopb")
 skeleton = NodePath("")
 
 [node name="Car" parent="." instance=ExtResource("2_iyx2u")]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_v6fml")

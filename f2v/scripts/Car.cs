@@ -56,7 +56,8 @@ public partial class Car : VehicleBody3D
 
     public override void _PhysicsProcess(double delta)
     {
-        if (GetTree().GetNodesInGroup("Menu")[0] is Control Menu && Menu.Visible)
+        if (GetTree().GetNodesInGroup("Menu")[0] is Control Menu && Menu.Visible
+            || GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").GetMultiplayerAuthority() != Multiplayer.GetUniqueId())
         {
             return;
         }

@@ -41,24 +41,6 @@ public partial class LanMenu : GridContainer
         RefreshPlayerList();
     }
 
-    private void RefreshPlayerList()
-    {
-        // Supprime tous les enfants actuels
-        foreach (Node child in _playerList.GetChildren())
-        {
-            child.QueueFree(); // Ou _playerList.RemoveChild(child);
-        }
-
-        // Ajoute le titre
-        _playerList.AddChild(new Label() { Text = "Players" });
-
-        // Ajoute les joueurs
-        foreach (var player in GameManager.Players)
-        {
-            _playerList.AddChild(new Label() { Text = $"{player.Name} ({player.Id})" });
-        }
-    }
-
     private void ConnectionFailed()
     {
         GD.Print("Connection failed");
@@ -67,18 +49,18 @@ public partial class LanMenu : GridContainer
     private void ConnectedToServer()
     {
         GD.Print("Connected to server");
-        RpcId(1, "SendPlayerInformation", _nameEdit.Text, Multiplayer.GetUniqueId());
     }
 
     private void PeerDisconnected(long id)
     {
         GD.Print("Peer disconnected: " + id);
+        Rpc("SendRemovePlayerInformation", id);
     }
 
     private void PeerConnected(long id)
     {
         GD.Print("Peer connected: " + id);
-        RefreshPlayerList();
+        Rpc("SendAddPlayerInformation", _nameEdit.Text, Multiplayer.GetUniqueId());
     }
 
     private void _on_host_pressed()
@@ -87,6 +69,10 @@ public partial class LanMenu : GridContainer
         if (_hostButton.Text == "Stop")
         {
             GD.Print("Stopping server");
+            foreach (var player in GameManager.Players)
+            {
+                RpcId(1, "SendRemovePlayerInformation", player.Id);
+            }
             Multiplayer.MultiplayerPeer.Close();
             Multiplayer.MultiplayerPeer = null;
             _hostButton.Text = "Host";
@@ -105,8 +91,7 @@ public partial class LanMenu : GridContainer
         Multiplayer.MultiplayerPeer = peer;
         _hostButton.Text = "Stop";
 
-        SendPlayerInformation(_nameEdit.Text, 1);
-        RefreshPlayerList();
+        SendAddPlayerInformation(_nameEdit.Text, 1);
         _startButton.Disabled = false;
     }
 
@@ -130,17 +115,15 @@ public partial class LanMenu : GridContainer
         peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
         Multiplayer.MultiplayerPeer = peer;
         _joinButton.Text = "Disconnect";
-        RefreshPlayerList();
     }
 
     public void _on_start_pressed()
     {
         Rpc("StartGame");
-        GetParent().GetParent<Menu>().Visible = false;
     }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-    private void SendPlayerInformation(string name, int id)
+    private void SendAddPlayerInformation(string name, long id)
     {
         if (GameManager.Players.Find(p => p.Id == id) == null)
         {
@@ -151,18 +134,57 @@ public partial class LanMenu : GridContainer
                 Id = id
             });
         }
-        else
+
+        if (Multiplayer.IsServer())
         {
-            GD.Print("Updating player: " + name + " with id: " + id);
-            GameManager.Players.Find(p => p.Id == id).Name = name;
+            foreach (var player in GameManager.Players)
+            {
+                Rpc("SendAddPlayerInformation", player.Name, player.Id);
+            }
+        }
+        RefreshPlayerList();
+    }
+
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    private void SendRemovePlayerInformation(long id)
+    {
+        GameManager.Players.Remove(GameManager.Players.First<PlayerInfo>(i => i.Id == id));
+        var players = GetTree().GetNodesInGroup("Players");
+
+        foreach (var item in players)
+        {
+            if (item.Name == id.ToString())
+            {
+                item.QueueFree();
+            }
         }
 
         if (Multiplayer.IsServer())
         {
             foreach (var player in GameManager.Players)
             {
-                Rpc("SendPlayerInformation", player.Name, player.Id);
+                Rpc("SendRemovePlayerInformation", id);
             }
+        }
+        RefreshPlayerList();
+    }
+
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    private void RefreshPlayerList()
+    {
+        // Supprime tous les enfants actuels
+        foreach (Node child in _playerList.GetChildren())
+        {
+            child.QueueFree(); // Ou _playerList.RemoveChild(child);
+        }
+
+        // Ajoute le titre
+        _playerList.AddChild(new Label() { Text = "Players" });
+
+        // Ajoute les joueurs
+        foreach (var player in GameManager.Players)
+        {
+            _playerList.AddChild(new Label() { Text = $"{player.Name} ({player.Id})" });
         }
     }
 
@@ -172,6 +194,7 @@ public partial class LanMenu : GridContainer
         CleanupExistingGame();
         var game = GameScene.Instantiate<Game>();
         GetTree().Root.AddChild(game);
+        GetParent().GetParent<Menu>().Visible = false;
     }
 
     public bool IsGameLoaded()
