@@ -6,12 +6,14 @@ public partial class LanMenu : GridContainer
 {
     [Export] PackedScene GameScene;
 
+    private BoxContainer _playerList;
     private TextEdit _nameEdit;
     private TextEdit _ipEdit;
     private TextEdit _portEdit;
     private TextEdit _maxClientsEdit;
     private Button _hostButton;
     private Button _joinButton;
+    private Button _startButton;
 
     private ENetMultiplayerPeer peer;
 
@@ -23,14 +25,38 @@ public partial class LanMenu : GridContainer
         _hostButton = GetTree().GetNodesInGroup("menu_buttons").First(mb => mb.Name.Equals("Host")) as Button;
         _joinButton = GetTree().GetNodesInGroup("menu_buttons").First(mb => mb.Name.Equals("Join")) as Button;
         _nameEdit = GetTree().GetNodesInGroup("menu_buttons").First(mb => mb.Name.Equals("Name")) as TextEdit;
+        _startButton = GetTree().GetNodesInGroup("menu_buttons").First(mb => mb.Name.Equals("Start")) as Button;
+
+        _playerList = GetTree().GetNodesInGroup("menu_buttons").First(mb => mb.Name.Equals("PlayerList")) as BoxContainer;
 
         _hostButton.Pressed += _on_host_pressed;
         _joinButton.Pressed += _on_join_pressed;
+        _startButton.Pressed += _on_start_pressed;
 
         Multiplayer.PeerConnected += PeerConnected;
         Multiplayer.PeerDisconnected += PeerDisconnected;
         Multiplayer.ConnectedToServer += ConnectedToServer;
         Multiplayer.ConnectionFailed += ConnectionFailed;
+
+        RefreshPlayerList();
+    }
+
+    private void RefreshPlayerList()
+    {
+        // Supprime tous les enfants actuels
+        foreach (Node child in _playerList.GetChildren())
+        {
+            child.QueueFree(); // Ou _playerList.RemoveChild(child);
+        }
+
+        // Ajoute le titre
+        _playerList.AddChild(new Label() { Text = "Players" });
+
+        // Ajoute les joueurs
+        foreach (var player in GameManager.Players)
+        {
+            _playerList.AddChild(new Label() { Text = $"{player.Name} ({player.Id})" });
+        }
     }
 
     private void ConnectionFailed()
@@ -52,6 +78,7 @@ public partial class LanMenu : GridContainer
     private void PeerConnected(long id)
     {
         GD.Print("Peer connected: " + id);
+        RefreshPlayerList();
     }
 
     private void _on_host_pressed()
@@ -79,7 +106,8 @@ public partial class LanMenu : GridContainer
         _hostButton.Text = "Stop";
 
         SendPlayerInformation(_nameEdit.Text, 1);
-        Start();
+        RefreshPlayerList();
+        _startButton.Disabled = false;
     }
 
     private void _on_join_pressed()
@@ -102,10 +130,10 @@ public partial class LanMenu : GridContainer
         peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
         Multiplayer.MultiplayerPeer = peer;
         _joinButton.Text = "Disconnect";
-        StartGame();
+        RefreshPlayerList();
     }
 
-    public void Start()
+    public void _on_start_pressed()
     {
         Rpc("StartGame");
         GetParent().GetParent<Menu>().Visible = false;

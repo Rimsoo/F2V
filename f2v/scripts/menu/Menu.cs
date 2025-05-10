@@ -107,7 +107,7 @@ public partial class Menu : Control
             Name = "Player",
             Id = 1
         });
-        LanMenu.Start();
+        LanMenu._on_start_pressed();
         this.Visible = false;
     }
 

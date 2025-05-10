@@ -33,6 +33,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MainMenu" type="VBoxContainer" parent="CenterContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Game" type="Button" parent="CenterContainer/MainMenu"]
@@ -90,7 +91,6 @@ text = "Change
 metadata/action_name = "move_backward"
 
 [node name="LanMenu" type="GridContainer" parent="CenterContainer"]
-visible = false
 layout_mode = 2
 columns = 2
 script = ExtResource("3_11y2r")
@@ -210,7 +210,17 @@ metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 [node name="Start" type="Button" parent="CenterContainer/LanMenu/SpanningTableContainer/SpanningCellContainer11" groups=["menu_buttons"]]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
+disabled = true
 text = "Start"
+
+[node name="SpanningCellContainer12" type="Container" parent="CenterContainer/LanMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+col_span = 2
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="PlayerList" type="VBoxContainer" parent="CenterContainer/LanMenu/SpanningTableContainer/SpanningCellContainer12" groups=["menu_buttons"]]
+layout_mode = 2
 
 [connection signal="pressed" from="CenterContainer/MainMenu/Game" to="." method="_on_game_pressed"]
 [connection signal="pressed" from="CenterContainer/MainMenu/Controls" to="." method="OnControlsPressed"]
