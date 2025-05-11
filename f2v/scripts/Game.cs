@@ -15,6 +15,21 @@ public partial class Game : Node3D
 
     public override void _Process(double delta)
     {
+        Menu Menu = GetTree().Root.GetNode<Menu>("F2V/Menu");
+        if (Menu.Visible)
+        {
+            return;
+        }
+
+        float resetBall = Input.GetActionStrength("reset_ball");
+        if (resetBall > 0.0f
+            && Multiplayer.GetUniqueId() == 1)
+        {
+            // Reset the ball
+            ResetBall();
+            ReSpawnPlayers();
+        }
+
     }
 
     public override void _ExitTree()
@@ -45,5 +60,25 @@ public partial class Game : Node3D
                 }
             }
         }
+    }
+
+    private void ReSpawnPlayers()
+    {
+        foreach (Node child in _players.GetChildren())
+        {
+            child.QueueFree();
+            _players.RemoveChild(child);
+        }
+
+        SpawnPlayers();
+    }
+
+    private void ResetBall()
+    {
+        // Reset the ball position
+        RigidBody3D Ball = GetNode<RigidBody3D>("Ball");
+        Ball.GlobalPosition = new Vector3(0, 2, 0);
+        Ball.GlobalRotation = new Vector3(0, 0, 0);
+        Ball.LinearVelocity = new Vector3(0, 0, 0);
     }
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://blwb2nbfulmyg"]
+[gd_scene load_steps=7 format=3 uid="uid://blwb2nbfulmyg"]
 
 [ext_resource type="Script" uid="uid://cjgtf2drdhxml" path="res://scripts/Game.cs" id="1_u3f7l"]
 [ext_resource type="PackedScene" uid="uid://cueb4nnmy3dci" path="res://scenes/Field.tscn" id="2_lb8xn"]
@@ -10,6 +10,14 @@ resource_local_to_scene = true
 friction = 0.0
 rough = true
 bounce = 0.6
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_78awf"]
+properties/0/path = NodePath("Ball:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Ball:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_u3f7l")
@@ -42,3 +50,6 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -30.29
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 18.69, 0, 0)
 
 [node name="Players" type="Node3D" parent="." groups=["Players"]]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_78awf")

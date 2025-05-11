@@ -87,7 +87,7 @@ public partial class Menu : Control
         return children;
     }
 
-    private void GetChildrenRecursive<T>(Node node, List<T> children)
+    public static void GetChildrenRecursive<T>(Node node, List<T> children)
     {
         foreach (Control child in node.GetChildren().Cast<Control>())
         {
@@ -107,7 +107,7 @@ public partial class Menu : Control
             Name = "Player",
             Id = 1
         });
-        LanMenu._on_start_pressed();
+        LanMenu.StartGame();
         this.Visible = false;
     }
 

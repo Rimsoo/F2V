@@ -4,25 +4,23 @@ using Godot;
 public partial class ControlsMenu : GridContainer
 {
     // Called when the node enters the scene tree for the first time.
-    private Label _waitForKeyLabel;
     private bool isWaitingForKey;
     private string actionToRebind;
     private Button _pressedButton;
 
     public override void _Ready()
     {
-        _waitForKeyLabel = GetNode<Label>("WaitContainer/WaitInput");
-        _waitForKeyLabel.Visible = false;
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
-        _waitForKeyLabel.Visible = isWaitingForKey;
     }
 
-    public void ButtonClicked(Button pressedButton)
+    public void ButtonClicked(NodePath pressedButtonPath)
     {
+        GD.Print(pressedButtonPath);
+        Button pressedButton = GetNode(pressedButtonPath) as Button;
         if (!pressedButton.HasMeta("action_name"))
         {
             return;
@@ -32,7 +30,7 @@ public partial class ControlsMenu : GridContainer
         actionToRebind = (string)pressedButton.GetMeta("action_name");
 
         isWaitingForKey = true;
-        _waitForKeyLabel.Visible = true;
+        _pressedButton.Text = "Press a key...";
         _pressedButton = pressedButton;
     }
 
@@ -48,7 +46,7 @@ public partial class ControlsMenu : GridContainer
         if (@event.IsActionPressed("ui_cancel"))
         {
             isWaitingForKey = false;
-            _waitForKeyLabel.Visible = false;
+            _pressedButton.Text = "Change";
             return;
         }
 
@@ -87,7 +85,6 @@ public partial class ControlsMenu : GridContainer
         if (eventHandled)
         {
             isWaitingForKey = false;
-            _waitForKeyLabel.Visible = false;
         }
     }
 

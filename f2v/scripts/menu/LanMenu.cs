@@ -19,15 +19,15 @@ public partial class LanMenu : GridContainer
 
     public override void _Ready()
     {
-        _ipEdit = GetTree().GetNodesInGroup("menu_buttons").First(mb => mb.Name.Equals("Ip")) as TextEdit;
-        _portEdit = GetTree().GetNodesInGroup("menu_buttons").First(mb => mb.Name.Equals("Port")) as TextEdit;
-        _maxClientsEdit = GetTree().GetNodesInGroup("menu_buttons").First(mb => mb.Name.Equals("MaxClients")) as TextEdit;
-        _hostButton = GetTree().GetNodesInGroup("menu_buttons").First(mb => mb.Name.Equals("Host")) as Button;
-        _joinButton = GetTree().GetNodesInGroup("menu_buttons").First(mb => mb.Name.Equals("Join")) as Button;
-        _nameEdit = GetTree().GetNodesInGroup("menu_buttons").First(mb => mb.Name.Equals("Name")) as TextEdit;
-        _startButton = GetTree().GetNodesInGroup("menu_buttons").First(mb => mb.Name.Equals("Start")) as Button;
+        _ipEdit = GetTree().GetNodesInGroup("lan_buttons").First(mb => mb.Name.Equals("Ip")) as TextEdit;
+        _portEdit = GetTree().GetNodesInGroup("lan_buttons").First(mb => mb.Name.Equals("Port")) as TextEdit;
+        _maxClientsEdit = GetTree().GetNodesInGroup("lan_buttons").First(mb => mb.Name.Equals("MaxClients")) as TextEdit;
+        _hostButton = GetTree().GetNodesInGroup("lan_buttons").First(mb => mb.Name.Equals("Host")) as Button;
+        _joinButton = GetTree().GetNodesInGroup("lan_buttons").First(mb => mb.Name.Equals("Join")) as Button;
+        _nameEdit = GetTree().GetNodesInGroup("lan_buttons").First(mb => mb.Name.Equals("Name")) as TextEdit;
+        _startButton = GetTree().GetNodesInGroup("lan_buttons").First(mb => mb.Name.Equals("Start")) as Button;
 
-        _playerList = GetTree().GetNodesInGroup("menu_buttons").First(mb => mb.Name.Equals("PlayerList")) as BoxContainer;
+        _playerList = GetTree().GetNodesInGroup("lan_buttons").First(mb => mb.Name.Equals("PlayerList")) as BoxContainer;
 
         _hostButton.Pressed += _on_host_pressed;
         _joinButton.Pressed += _on_join_pressed;

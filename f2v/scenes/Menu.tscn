@@ -54,40 +54,95 @@ text = "Quit"
 [node name="ControlsMenu" type="GridContainer" parent="CenterContainer"]
 visible = false
 layout_mode = 2
-columns = 2
 script = ExtResource("2_1qy4r")
 
-[node name="Label3" type="Label" parent="CenterContainer/ControlsMenu"]
+[node name="SpanningTableContainer" type="Container" parent="CenterContainer/ControlsMenu"]
 layout_mode = 2
+script = ExtResource("5_b6cxs")
+columns = 2
+metadata/_custom_type_script = "uid://cim3nndmenlsh"
 
-[node name="WaitContainer" type="VBoxContainer" parent="CenterContainer/ControlsMenu"]
-custom_minimum_size = Vector2(250, 0)
+[node name="SpanningCellContainer" type="Container" parent="CenterContainer/ControlsMenu/SpanningTableContainer"]
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="WaitInput" type="Label" parent="CenterContainer/ControlsMenu/WaitContainer"]
-visible = false
-layout_mode = 2
-text = "Press a button or ESC to cancel"
-
-[node name="Label" type="Label" parent="CenterContainer/ControlsMenu"]
+[node name="Label2" type="Label" parent="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer"]
 layout_mode = 2
 text = "Forward"
 
-[node name="Fw" type="Button" parent="CenterContainer/ControlsMenu"]
+[node name="SpanningCellContainer2" type="Container" parent="CenterContainer/ControlsMenu/SpanningTableContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Fw" type="Button" parent="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer2"]
 layout_mode = 2
 text = "Change
 "
 metadata/action_name = "move_forward"
 
-[node name="Label2" type="Label" parent="CenterContainer/ControlsMenu"]
+[node name="SpanningCellContainer3" type="Container" parent="CenterContainer/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer3"]
 layout_mode = 2
 text = "Backward"
 
-[node name="Bw" type="Button" parent="CenterContainer/ControlsMenu"]
+[node name="SpanningCellContainer4" type="Container" parent="CenterContainer/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Bw" type="Button" parent="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer4"]
 layout_mode = 2
 text = "Change
 "
 metadata/action_name = "move_backward"
+
+[node name="SpanningCellContainer5" type="Container" parent="CenterContainer/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer5"]
+layout_mode = 2
+text = "Turn left"
+
+[node name="SpanningCellContainer6" type="Container" parent="CenterContainer/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Tl" type="Button" parent="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer6"]
+layout_mode = 2
+text = "Change
+"
+metadata/action_name = "turn_left"
+
+[node name="SpanningCellContainer7" type="Container" parent="CenterContainer/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer7"]
+layout_mode = 2
+text = "Turn right"
+
+[node name="SpanningCellContainer8" type="Container" parent="CenterContainer/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Tr" type="Button" parent="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer8"]
+layout_mode = 2
+text = "Change
+"
+metadata/action_name = "turn_right"
 
 [node name="LanMenu" type="GridContainer" parent="CenterContainer"]
 visible = false
@@ -116,7 +171,7 @@ layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Name" type="TextEdit" parent="CenterContainer/LanMenu/SpanningTableContainer/SpanningCellContainer2" groups=["menu_buttons"]]
+[node name="Name" type="TextEdit" parent="CenterContainer/LanMenu/SpanningTableContainer/SpanningCellContainer2" groups=["lan_buttons"]]
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 text = "Player"
@@ -136,7 +191,7 @@ layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Ip" type="TextEdit" parent="CenterContainer/LanMenu/SpanningTableContainer/SpanningCellContainer4" groups=["menu_buttons"]]
+[node name="Ip" type="TextEdit" parent="CenterContainer/LanMenu/SpanningTableContainer/SpanningCellContainer4" groups=["lan_buttons"]]
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 text = "127.0.0.1"
@@ -156,7 +211,7 @@ layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Port" type="TextEdit" parent="CenterContainer/LanMenu/SpanningTableContainer/SpanningCellContainer6" groups=["menu_buttons"]]
+[node name="Port" type="TextEdit" parent="CenterContainer/LanMenu/SpanningTableContainer/SpanningCellContainer6" groups=["lan_buttons"]]
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 text = "6040"
@@ -176,7 +231,7 @@ layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="MaxClients" type="TextEdit" parent="CenterContainer/LanMenu/SpanningTableContainer/SpanningCellContainer8" groups=["menu_buttons"]]
+[node name="MaxClients" type="TextEdit" parent="CenterContainer/LanMenu/SpanningTableContainer/SpanningCellContainer8" groups=["lan_buttons"]]
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 text = "4"
@@ -187,7 +242,7 @@ layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Host" type="Button" parent="CenterContainer/LanMenu/SpanningTableContainer/SpanningCellContainer9" groups=["menu_buttons"]]
+[node name="Host" type="Button" parent="CenterContainer/LanMenu/SpanningTableContainer/SpanningCellContainer9" groups=["lan_buttons"]]
 layout_mode = 2
 text = "Host"
 
@@ -196,7 +251,7 @@ layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Join" type="Button" parent="CenterContainer/LanMenu/SpanningTableContainer/SpanningCellContainer10" groups=["menu_buttons"]]
+[node name="Join" type="Button" parent="CenterContainer/LanMenu/SpanningTableContainer/SpanningCellContainer10" groups=["lan_buttons"]]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 text = "Join"
@@ -207,7 +262,7 @@ script = ExtResource("6_aaywf")
 col_span = 2
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Start" type="Button" parent="CenterContainer/LanMenu/SpanningTableContainer/SpanningCellContainer11" groups=["menu_buttons"]]
+[node name="Start" type="Button" parent="CenterContainer/LanMenu/SpanningTableContainer/SpanningCellContainer11" groups=["lan_buttons"]]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 disabled = true
@@ -219,12 +274,14 @@ script = ExtResource("6_aaywf")
 col_span = 2
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="PlayerList" type="VBoxContainer" parent="CenterContainer/LanMenu/SpanningTableContainer/SpanningCellContainer12" groups=["menu_buttons"]]
+[node name="PlayerList" type="VBoxContainer" parent="CenterContainer/LanMenu/SpanningTableContainer/SpanningCellContainer12" groups=["lan_buttons"]]
 layout_mode = 2
 
 [connection signal="pressed" from="CenterContainer/MainMenu/Game" to="." method="_on_game_pressed"]
 [connection signal="pressed" from="CenterContainer/MainMenu/Controls" to="." method="OnControlsPressed"]
 [connection signal="pressed" from="CenterContainer/MainMenu/Lan" to="." method="OnLanPressed"]
 [connection signal="pressed" from="CenterContainer/MainMenu/Quit" to="." method="OnQuitButtonPressed"]
-[connection signal="pressed" from="CenterContainer/ControlsMenu/Fw" to="CenterContainer/ControlsMenu" method="ButtonClicked"]
-[connection signal="pressed" from="CenterContainer/ControlsMenu/Bw" to="CenterContainer/ControlsMenu" method="ButtonClicked"]
+[connection signal="pressed" from="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer2/Fw" to="CenterContainer/ControlsMenu" method="ButtonClicked" binds= [NodePath(".")]]
+[connection signal="pressed" from="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer4/Bw" to="CenterContainer/ControlsMenu" method="ButtonClicked" binds= [NodePath(".")]]
+[connection signal="pressed" from="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer6/Tl" to="CenterContainer/ControlsMenu" method="ButtonClicked" binds= [NodePath(".")]]
+[connection signal="pressed" from="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer8/Tr" to="CenterContainer/ControlsMenu" method="ButtonClicked" binds= [NodePath(".")]]
