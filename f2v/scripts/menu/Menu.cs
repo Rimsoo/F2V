@@ -28,7 +28,7 @@ public partial class Menu : Control
         FocusFirstButtonInHierarchy(_navigationContainers.Last());
     }
 
-    private void FocusFirstButtonInHierarchy(Node node)
+    public static void FocusFirstButtonInHierarchy(Node node)
     {
         foreach (var child in node.GetChildren())
         {
@@ -37,9 +37,9 @@ public partial class Menu : Control
                 button.GrabFocus();
                 return;
             }
-            else if (child is Container container)
+            else
             {
-                FocusFirstButtonInHierarchy(container); // Récursion sur les enfants
+                FocusFirstButtonInHierarchy(child); // Récursion sur les enfants
             }
         }
     }
@@ -116,10 +116,10 @@ public partial class Menu : Control
         GetTree().Quit();
     }
 
-    private void OnControlsPressed()
+    private void OnSettingsPressed()
     {
         _navigationContainers.Last().Visible = false;
-        _navigationContainers.Add(GetNode<Container>("CenterContainer/ControlsMenu"));
+        _navigationContainers.Add(GetNode<Container>("Settings"));
         _navigationContainers.Last().Visible = true;
 
         InitButtons();

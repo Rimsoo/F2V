@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Godot;
 
 public partial class ControlsMenu : GridContainer
@@ -8,19 +9,40 @@ public partial class ControlsMenu : GridContainer
     private string actionToRebind;
     private Button _pressedButton;
 
+    private SettingsManager _settings => SettingsManager.Instance;
+
     public override void _Ready()
     {
+        LoadBindings();
+
+        foreach (Button button in GetTree().GetNodesInGroup("bind_buttons"))
+        {
+            button.Pressed += () => ButtonClicked(button);
+
+            if (button.HasMeta("action_name"))
+            {
+                string action = (string)button.GetMeta("action_name");
+                var events = InputMap.ActionGetEvents(action);
+                button.Text = events.Count > 0
+                    ? GetEventText(events[0])
+                    : "Not assigned";
+            }
+        }
     }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
+    private string GetEventText(InputEvent @event)
     {
+        if (@event is InputEventJoypadMotion motion)
+            return GetAxisString(motion);
+
+        if (@event is InputEventJoypadButton joyBtn)
+            return $"Gamepad {joyBtn.ButtonIndex}";
+
+        return @event.AsText();
     }
 
-    public void ButtonClicked(NodePath pressedButtonPath)
+    private void ButtonClicked(Button pressedButton)
     {
-        GD.Print(pressedButtonPath);
-        Button pressedButton = GetNode(pressedButtonPath) as Button;
         if (!pressedButton.HasMeta("action_name"))
         {
             return;
@@ -30,8 +52,8 @@ public partial class ControlsMenu : GridContainer
         actionToRebind = (string)pressedButton.GetMeta("action_name");
 
         isWaitingForKey = true;
-        _pressedButton.Text = "Press a key...";
         _pressedButton = pressedButton;
+        _pressedButton.Text = "Press a key...";
     }
 
     // Dans ControlsMenu.cs
@@ -90,9 +112,13 @@ public partial class ControlsMenu : GridContainer
 
     private void RebindAction(InputEvent @event, string eventText)
     {
+        InputEvent clonedEvent = (InputEvent)@event.Duplicate();
+
         InputMap.ActionEraseEvents(actionToRebind);
-        InputMap.ActionAddEvent(actionToRebind, @event);
+        InputMap.ActionAddEvent(actionToRebind, clonedEvent);
         _pressedButton.Text = eventText;
+
+        _settings.SetSetting("Controls", actionToRebind, clonedEvent);
     }
 
     private void RebindAction(InputEvent @event)
@@ -100,10 +126,56 @@ public partial class ControlsMenu : GridContainer
         RebindAction(@event, @event.AsText());
     }
 
-    // Ajouter cette méthode dans ControlsMenu
     private string GetAxisString(InputEventJoypadMotion motionEvent)
     {
-        // Exemple : Convertir l'axe en texte lisible
-        return $"Axe {motionEvent.Axis}";
+        string axisName = motionEvent.Axis switch
+        {
+            JoyAxis.LeftX => "Left Stick X",
+            JoyAxis.LeftY => "Left Stick Y",
+            JoyAxis.RightX => "Right Stick X",
+            JoyAxis.RightY => "Right Stick Y",
+            JoyAxis.TriggerLeft => "Left Trigger",
+            JoyAxis.TriggerRight => "Right Trigger",
+            _ => $"Axis {motionEvent.Axis}"
+        };
+
+        return $"{axisName} {(motionEvent.AxisValue > 0 ? "+" : "-")}";
+    }
+
+    private void LoadBindings()
+    {
+        foreach (string action in InputMap.GetActions())
+        {
+            var value = _settings.GetSetting("Controls", action);
+
+            if (value?.VariantType == Variant.Type.Object)
+            {
+                // Utilisation de As<InputEvent>() avec gestion des null
+                InputEvent inputEvent = value?.As<InputEvent>();
+
+                if (inputEvent != null)
+                {
+                    InputMap.ActionEraseEvents(action);
+                    InputMap.ActionAddEvent(action, inputEvent);
+
+                    foreach (Button button in GetTree().GetNodesInGroup("bind_buttons"))
+                    {
+                        if ((string)button.GetMeta("action_name") == action)
+                        {
+                            button.Text = GetEventText(inputEvent);
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    GD.PrintErr($"Invalid input event type for action {action}");
+                }
+            }
+            else if (value?.VariantType != Variant.Type.Nil)
+            {
+                GD.PrintErr($"Non-object value found for action {action}");
+            }
+        }
     }
 }

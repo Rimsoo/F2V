@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1plua2pq2ca7"]
+[gd_scene load_steps=9 format=3 uid="uid://d1plua2pq2ca7"]
 
 [ext_resource type="Script" uid="uid://53mnsxnfdklv" path="res://scripts/menu/Menu.cs" id="1_p0gy6"]
 [ext_resource type="Script" uid="uid://biomj3vjoos4p" path="res://scripts/menu/ControlsMenu.cs" id="2_1qy4r"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://kp2nk428bytt" path="res://scripts/menu/LanMenu.cs" id="3_11y2r"]
 [ext_resource type="Script" uid="uid://cim3nndmenlsh" path="res://addons/spanning_table/spanning_table_container.gd" id="5_b6cxs"]
 [ext_resource type="Script" uid="uid://cgovyjkjx3ust" path="res://addons/spanning_table/spanning_cell_container.gd" id="6_aaywf"]
+[ext_resource type="Script" uid="uid://bwxfu33un5rp" path="res://scripts/menu/DisplayMenu.cs" id="8_1abgu"]
+[ext_resource type="Script" uid="uid://30dhqfb7k2qc" path="res://scripts/menu/AudioMenu.cs" id="9_yt8fu"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -33,15 +35,16 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MainMenu" type="VBoxContainer" parent="CenterContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Game" type="Button" parent="CenterContainer/MainMenu"]
 layout_mode = 2
 text = "Start"
 
-[node name="Controls" type="Button" parent="CenterContainer/MainMenu"]
+[node name="Settings" type="Button" parent="CenterContainer/MainMenu"]
 layout_mode = 2
-text = "Controls"
+text = "Settings"
 
 [node name="Lan" type="Button" parent="CenterContainer/MainMenu"]
 layout_mode = 2
@@ -50,99 +53,6 @@ text = "Lan"
 [node name="Quit" type="Button" parent="CenterContainer/MainMenu"]
 layout_mode = 2
 text = "Quit"
-
-[node name="ControlsMenu" type="GridContainer" parent="CenterContainer"]
-visible = false
-layout_mode = 2
-script = ExtResource("2_1qy4r")
-
-[node name="SpanningTableContainer" type="Container" parent="CenterContainer/ControlsMenu"]
-layout_mode = 2
-script = ExtResource("5_b6cxs")
-columns = 2
-metadata/_custom_type_script = "uid://cim3nndmenlsh"
-
-[node name="SpanningCellContainer" type="Container" parent="CenterContainer/ControlsMenu/SpanningTableContainer"]
-custom_minimum_size = Vector2(120, 0)
-layout_mode = 2
-script = ExtResource("6_aaywf")
-metadata/_custom_type_script = "uid://cgovyjkjx3ust"
-
-[node name="Label2" type="Label" parent="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer"]
-layout_mode = 2
-text = "Forward"
-
-[node name="SpanningCellContainer2" type="Container" parent="CenterContainer/ControlsMenu/SpanningTableContainer"]
-custom_minimum_size = Vector2(120, 0)
-layout_mode = 2
-script = ExtResource("6_aaywf")
-metadata/_custom_type_script = "uid://cgovyjkjx3ust"
-
-[node name="Fw" type="Button" parent="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer2"]
-layout_mode = 2
-text = "Change
-"
-metadata/action_name = "move_forward"
-
-[node name="SpanningCellContainer3" type="Container" parent="CenterContainer/ControlsMenu/SpanningTableContainer"]
-layout_mode = 2
-script = ExtResource("6_aaywf")
-metadata/_custom_type_script = "uid://cgovyjkjx3ust"
-
-[node name="Label2" type="Label" parent="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer3"]
-layout_mode = 2
-text = "Backward"
-
-[node name="SpanningCellContainer4" type="Container" parent="CenterContainer/ControlsMenu/SpanningTableContainer"]
-layout_mode = 2
-script = ExtResource("6_aaywf")
-metadata/_custom_type_script = "uid://cgovyjkjx3ust"
-
-[node name="Bw" type="Button" parent="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer4"]
-layout_mode = 2
-text = "Change
-"
-metadata/action_name = "move_backward"
-
-[node name="SpanningCellContainer5" type="Container" parent="CenterContainer/ControlsMenu/SpanningTableContainer"]
-layout_mode = 2
-script = ExtResource("6_aaywf")
-metadata/_custom_type_script = "uid://cgovyjkjx3ust"
-
-[node name="Label2" type="Label" parent="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer5"]
-layout_mode = 2
-text = "Turn left"
-
-[node name="SpanningCellContainer6" type="Container" parent="CenterContainer/ControlsMenu/SpanningTableContainer"]
-layout_mode = 2
-script = ExtResource("6_aaywf")
-metadata/_custom_type_script = "uid://cgovyjkjx3ust"
-
-[node name="Tl" type="Button" parent="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer6"]
-layout_mode = 2
-text = "Change
-"
-metadata/action_name = "turn_left"
-
-[node name="SpanningCellContainer7" type="Container" parent="CenterContainer/ControlsMenu/SpanningTableContainer"]
-layout_mode = 2
-script = ExtResource("6_aaywf")
-metadata/_custom_type_script = "uid://cgovyjkjx3ust"
-
-[node name="Label2" type="Label" parent="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer7"]
-layout_mode = 2
-text = "Turn right"
-
-[node name="SpanningCellContainer8" type="Container" parent="CenterContainer/ControlsMenu/SpanningTableContainer"]
-layout_mode = 2
-script = ExtResource("6_aaywf")
-metadata/_custom_type_script = "uid://cgovyjkjx3ust"
-
-[node name="Tr" type="Button" parent="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer8"]
-layout_mode = 2
-text = "Change
-"
-metadata/action_name = "turn_right"
 
 [node name="LanMenu" type="GridContainer" parent="CenterContainer"]
 visible = false
@@ -277,11 +187,449 @@ metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 [node name="PlayerList" type="VBoxContainer" parent="CenterContainer/LanMenu/SpanningTableContainer/SpanningCellContainer12" groups=["lan_buttons"]]
 layout_mode = 2
 
+[node name="Settings" type="TabContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.975
+anchor_bottom = 1.0
+offset_left = 93.0
+offset_top = 62.0
+offset_right = -62.0
+offset_bottom = -62.0
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 0
+
+[node name="Controls" type="TabBar" parent="Settings"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="ControlsMenu" type="GridContainer" parent="Settings/Controls"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_1qy4r")
+
+[node name="SpanningTableContainer" type="Container" parent="Settings/Controls/ControlsMenu"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+script = ExtResource("5_b6cxs")
+columns = 4
+metadata/_custom_type_script = "uid://cim3nndmenlsh"
+
+[node name="SpanningCellContainer" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer"]
+layout_mode = 2
+text = "Forward"
+
+[node name="SpanningCellContainer2" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Fw" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer2" groups=["bind_buttons"]]
+layout_mode = 2
+text = "Change
+"
+metadata/action_name = "move_forward"
+
+[node name="SpanningCellContainer3" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer3"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "Backward"
+
+[node name="SpanningCellContainer4" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Bw" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer4" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "Change
+"
+metadata/action_name = "move_backward"
+
+[node name="SpanningCellContainer5" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer5"]
+layout_mode = 2
+text = "Turn left"
+
+[node name="SpanningCellContainer6" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Tl" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer6" groups=["bind_buttons"]]
+layout_mode = 2
+text = "Change
+"
+metadata/action_name = "turn_left"
+
+[node name="SpanningCellContainer7" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer7"]
+layout_mode = 2
+text = "Turn right"
+
+[node name="SpanningCellContainer8" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Tr" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer8" groups=["bind_buttons"]]
+layout_mode = 2
+text = "Change
+"
+metadata/action_name = "turn_right"
+
+[node name="SpanningCellContainer9" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer9"]
+layout_mode = 2
+text = "Roll left"
+
+[node name="SpanningCellContainer10" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Rl" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer10" groups=["bind_buttons"]]
+layout_mode = 2
+text = "Change
+"
+metadata/action_name = "roll_left"
+
+[node name="SpanningCellContainer11" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer11"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "Roll right"
+
+[node name="SpanningCellContainer12" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Rr" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer12" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "Change
+"
+metadata/action_name = "roll_right"
+
+[node name="SpanningCellContainer13" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer13"]
+layout_mode = 2
+text = "Jump"
+
+[node name="SpanningCellContainer14" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Ju" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer14" groups=["bind_buttons"]]
+layout_mode = 2
+text = "Change
+"
+metadata/action_name = "jump"
+
+[node name="SpanningCellContainer15" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer15"]
+layout_mode = 2
+text = "Boost"
+
+[node name="SpanningCellContainer16" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Bo" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer16" groups=["bind_buttons"]]
+layout_mode = 2
+text = "Change
+"
+metadata/action_name = "boost"
+
+[node name="SpanningCellContainer17" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer17"]
+layout_mode = 2
+text = "Brake"
+
+[node name="SpanningCellContainer18" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Br" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer18" groups=["bind_buttons"]]
+layout_mode = 2
+text = "Change
+"
+metadata/action_name = "brake"
+
+[node name="SpanningCellContainer19" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer19"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "Toggle camera"
+
+[node name="SpanningCellContainer20" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Cl" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer20" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "Change
+"
+metadata/action_name = "camera_lock"
+
+[node name="SpanningCellContainer21" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer21"]
+layout_mode = 2
+text = "Reset positions"
+
+[node name="SpanningCellContainer22" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Rs" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer22" groups=["bind_buttons"]]
+layout_mode = 2
+text = "Change
+"
+metadata/action_name = "reset_ball"
+
+[node name="SpanningCellContainer23" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer23"]
+layout_mode = 2
+text = "Menu - back"
+
+[node name="SpanningCellContainer24" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Bk" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer24" groups=["bind_buttons"]]
+layout_mode = 2
+text = "Change
+"
+metadata/action_name = "ui_cancel"
+
+[node name="Display" type="TabBar" parent="Settings"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="DisplayMenu" type="GridContainer" parent="Settings/Display"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_1abgu")
+
+[node name="SpanningTableContainer" type="Container" parent="Settings/Display/DisplayMenu"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+script = ExtResource("5_b6cxs")
+metadata/_custom_type_script = "uid://cim3nndmenlsh"
+
+[node name="SpanningCellContainer2" type="Container" parent="Settings/Display/DisplayMenu/SpanningTableContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Fullscreen" type="CheckBox" parent="Settings/Display/DisplayMenu/SpanningTableContainer/SpanningCellContainer2" groups=["display_settings"]]
+layout_direction = 3
+layout_mode = 2
+text = "Fullscreen    "
+metadata/action_name = "move_forward"
+
+[node name="SpanningCellContainer6" type="Container" parent="Settings/Display/DisplayMenu/SpanningTableContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Borderless" type="CheckBox" parent="Settings/Display/DisplayMenu/SpanningTableContainer/SpanningCellContainer6" groups=["display_settings"]]
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Borderless   "
+metadata/action_name = "move_forward"
+
+[node name="SpanningCellContainer4" type="Container" parent="Settings/Display/DisplayMenu/SpanningTableContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="VSync" type="CheckBox" parent="Settings/Display/DisplayMenu/SpanningTableContainer/SpanningCellContainer4" groups=["display_settings"]]
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 4
+text = "VSync            "
+metadata/action_name = "move_forward"
+
+[node name="Audio" type="TabBar" parent="Settings"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="AudioMenu" type="GridContainer" parent="Settings/Audio"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_yt8fu")
+
+[node name="SpanningTableContainer" type="Container" parent="Settings/Audio/AudioMenu"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+script = ExtResource("5_b6cxs")
+columns = 2
+metadata/_custom_type_script = "uid://cim3nndmenlsh"
+
+[node name="SpanningCellContainer" type="Container" parent="Settings/Audio/AudioMenu/SpanningTableContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="Settings/Audio/AudioMenu/SpanningTableContainer/SpanningCellContainer"]
+layout_mode = 2
+text = "Master"
+
+[node name="SpanningCellContainer2" type="Container" parent="Settings/Audio/AudioMenu/SpanningTableContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Master" type="HSlider" parent="Settings/Audio/AudioMenu/SpanningTableContainer/SpanningCellContainer2" groups=["audio_settings"]]
+layout_mode = 2
+size_flags_horizontal = 7
+max_value = 1.0
+step = 0.05
+metadata/action_name = "move_forward"
+
+[node name="SpanningCellContainer5" type="Container" parent="Settings/Audio/AudioMenu/SpanningTableContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="Settings/Audio/AudioMenu/SpanningTableContainer/SpanningCellContainer5"]
+layout_mode = 2
+text = "Music"
+
+[node name="SpanningCellContainer6" type="Container" parent="Settings/Audio/AudioMenu/SpanningTableContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Music" type="HSlider" parent="Settings/Audio/AudioMenu/SpanningTableContainer/SpanningCellContainer6" groups=["audio_settings"]]
+layout_mode = 2
+size_flags_horizontal = 7
+max_value = 1.0
+step = 0.05
+metadata/action_name = "move_forward"
+
+[node name="SpanningCellContainer3" type="Container" parent="Settings/Audio/AudioMenu/SpanningTableContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="Settings/Audio/AudioMenu/SpanningTableContainer/SpanningCellContainer3"]
+layout_mode = 2
+text = "SFX"
+
+[node name="SpanningCellContainer4" type="Container" parent="Settings/Audio/AudioMenu/SpanningTableContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="SFX" type="HSlider" parent="Settings/Audio/AudioMenu/SpanningTableContainer/SpanningCellContainer4" groups=["audio_settings"]]
+layout_mode = 2
+size_flags_horizontal = 7
+max_value = 1.0
+step = 0.05
+metadata/action_name = "move_forward"
+
 [connection signal="pressed" from="CenterContainer/MainMenu/Game" to="." method="_on_game_pressed"]
-[connection signal="pressed" from="CenterContainer/MainMenu/Controls" to="." method="OnControlsPressed"]
+[connection signal="pressed" from="CenterContainer/MainMenu/Settings" to="." method="OnSettingsPressed"]
 [connection signal="pressed" from="CenterContainer/MainMenu/Lan" to="." method="OnLanPressed"]
 [connection signal="pressed" from="CenterContainer/MainMenu/Quit" to="." method="OnQuitButtonPressed"]
-[connection signal="pressed" from="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer2/Fw" to="CenterContainer/ControlsMenu" method="ButtonClicked" binds= [NodePath(".")]]
-[connection signal="pressed" from="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer4/Bw" to="CenterContainer/ControlsMenu" method="ButtonClicked" binds= [NodePath(".")]]
-[connection signal="pressed" from="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer6/Tl" to="CenterContainer/ControlsMenu" method="ButtonClicked" binds= [NodePath(".")]]
-[connection signal="pressed" from="CenterContainer/ControlsMenu/SpanningTableContainer/SpanningCellContainer8/Tr" to="CenterContainer/ControlsMenu" method="ButtonClicked" binds= [NodePath(".")]]
+[connection signal="toggled" from="Settings/Display/DisplayMenu/SpanningTableContainer/SpanningCellContainer2/Fullscreen" to="Settings/Display/DisplayMenu" method="_on_fs_toggled"]
+[connection signal="toggled" from="Settings/Display/DisplayMenu/SpanningTableContainer/SpanningCellContainer6/Borderless" to="Settings/Display/DisplayMenu" method="_on_bs_toggled"]
+[connection signal="toggled" from="Settings/Display/DisplayMenu/SpanningTableContainer/SpanningCellContainer4/VSync" to="Settings/Display/DisplayMenu" method="_on_vs_toggled"]
+[connection signal="value_changed" from="Settings/Audio/AudioMenu/SpanningTableContainer/SpanningCellContainer2/Master" to="Settings/Audio/AudioMenu" method="_on_master_value_changed"]
+[connection signal="value_changed" from="Settings/Audio/AudioMenu/SpanningTableContainer/SpanningCellContainer6/Music" to="Settings/Audio/AudioMenu" method="_on_music_value_changed"]
+[connection signal="value_changed" from="Settings/Audio/AudioMenu/SpanningTableContainer/SpanningCellContainer4/SFX" to="Settings/Audio/AudioMenu" method="_on_sfx_value_changed"]
