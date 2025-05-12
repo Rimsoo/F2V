@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://d1plua2pq2ca7"]
+[gd_scene load_steps=10 format=3 uid="uid://d1plua2pq2ca7"]
 
 [ext_resource type="Script" uid="uid://53mnsxnfdklv" path="res://scripts/menu/Menu.cs" id="1_p0gy6"]
 [ext_resource type="Script" uid="uid://biomj3vjoos4p" path="res://scripts/menu/ControlsMenu.cs" id="2_1qy4r"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://kp2nk428bytt" path="res://scripts/menu/LanMenu.cs" id="3_11y2r"]
 [ext_resource type="Script" uid="uid://cim3nndmenlsh" path="res://addons/spanning_table/spanning_table_container.gd" id="5_b6cxs"]
 [ext_resource type="Script" uid="uid://cgovyjkjx3ust" path="res://addons/spanning_table/spanning_cell_container.gd" id="6_aaywf"]
+[ext_resource type="Script" uid="uid://pjk2mqn7nget" path="res://scripts/menu/Settings.cs" id="6_yt8fu"]
 [ext_resource type="Script" uid="uid://bwxfu33un5rp" path="res://scripts/menu/DisplayMenu.cs" id="8_1abgu"]
 [ext_resource type="Script" uid="uid://30dhqfb7k2qc" path="res://scripts/menu/AudioMenu.cs" id="9_yt8fu"]
 
@@ -35,7 +36,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MainMenu" type="VBoxContainer" parent="CenterContainer"]
-visible = false
 layout_mode = 2
 
 [node name="Game" type="Button" parent="CenterContainer/MainMenu"]
@@ -85,7 +85,6 @@ metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 text = "Player"
-metadata/action_name = "move_forward"
 
 [node name="SpanningCellContainer3" type="Container" parent="CenterContainer/LanMenu/SpanningTableContainer"]
 layout_mode = 2
@@ -105,7 +104,6 @@ metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 text = "127.0.0.1"
-metadata/action_name = "move_forward"
 
 [node name="SpanningCellContainer5" type="Container" parent="CenterContainer/LanMenu/SpanningTableContainer"]
 layout_mode = 2
@@ -125,7 +123,6 @@ metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 text = "6040"
-metadata/action_name = "move_backward"
 
 [node name="SpanningCellContainer7" type="Container" parent="CenterContainer/LanMenu/SpanningTableContainer"]
 layout_mode = 2
@@ -145,7 +142,6 @@ metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 text = "4"
-metadata/action_name = "move_backward"
 
 [node name="SpanningCellContainer9" type="Container" parent="CenterContainer/LanMenu/SpanningTableContainer"]
 layout_mode = 2
@@ -188,6 +184,7 @@ metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 layout_mode = 2
 
 [node name="Settings" type="TabContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.975
@@ -199,6 +196,7 @@ offset_bottom = -62.0
 grow_horizontal = 2
 grow_vertical = 2
 current_tab = 0
+script = ExtResource("6_yt8fu")
 
 [node name="Controls" type="TabBar" parent="Settings"]
 layout_mode = 2
@@ -227,43 +225,121 @@ layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Label2" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer"]
-layout_mode = 2
-text = "Forward"
-
 [node name="SpanningCellContainer2" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Fw" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer2" groups=["bind_buttons"]]
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer2"]
 layout_mode = 2
-text = "Change
-"
-metadata/action_name = "move_forward"
+size_flags_horizontal = 3
+
+[node name="label" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Keyboard"
+
+[node name="lbl" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Gamepad"
 
 [node name="SpanningCellContainer3" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
 layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Label2" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer3"]
-custom_minimum_size = Vector2(120, 0)
-layout_mode = 2
-text = "Backward"
-
 [node name="SpanningCellContainer4" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
 layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Bw" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer4" groups=["bind_buttons"]]
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer4"]
+layout_mode = 2
+
+[node name="Fw" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer4/HBoxContainer"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Keyboard"
+
+[node name="Fw2" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer4/HBoxContainer"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Gamepad"
+
+[node name="SpanningCellContainer25" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
-text = "Change
-"
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer25"]
+layout_mode = 2
+text = "Forward"
+
+[node name="SpanningCellContainer26" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer26"]
+layout_mode = 2
+
+[node name="Fw" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer26/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
+metadata/action_name = "move_forward"
+metadata/input_type = "keyboard"
+
+[node name="Fw2" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer26/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
+metadata/action_name = "move_forward"
+metadata/input_type = "gamepad"
+
+[node name="SpanningCellContainer27" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="Label2" type="Label" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer27"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "Backward"
+
+[node name="SpanningCellContainer28" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
+layout_mode = 2
+script = ExtResource("6_aaywf")
+metadata/_custom_type_script = "uid://cgovyjkjx3ust"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer28"]
+layout_mode = 2
+
+[node name="Bw" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer28/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
 metadata/action_name = "move_backward"
+metadata/input_type = "keyboard"
+
+[node name="Bw2" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer28/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
+metadata/action_name = "move_backward"
+metadata/input_type = "gamepad"
 
 [node name="SpanningCellContainer5" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
 layout_mode = 2
@@ -279,11 +355,24 @@ layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Tl" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer6" groups=["bind_buttons"]]
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer6"]
 layout_mode = 2
-text = "Change
-"
+
+[node name="Tl" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer6/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
 metadata/action_name = "turn_left"
+metadata/input_type = "keyboard"
+
+[node name="Tl2" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer6/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
+metadata/action_name = "turn_left"
+metadata/input_type = "gamepad"
 
 [node name="SpanningCellContainer7" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
 layout_mode = 2
@@ -299,11 +388,24 @@ layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Tr" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer8" groups=["bind_buttons"]]
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer8"]
 layout_mode = 2
-text = "Change
-"
+
+[node name="Tr" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer8/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
 metadata/action_name = "turn_right"
+metadata/input_type = "keyboard"
+
+[node name="Tr2" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer8/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
+metadata/action_name = "turn_right"
+metadata/input_type = "gamepad"
 
 [node name="SpanningCellContainer9" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
 custom_minimum_size = Vector2(120, 0)
@@ -321,11 +423,24 @@ layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Rl" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer10" groups=["bind_buttons"]]
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer10"]
 layout_mode = 2
-text = "Change
-"
+
+[node name="Rl" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer10/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
 metadata/action_name = "roll_left"
+metadata/input_type = "keyboard"
+
+[node name="Rl2" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer10/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
+metadata/action_name = "roll_left"
+metadata/input_type = "gamepad"
 
 [node name="SpanningCellContainer11" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
 layout_mode = 2
@@ -342,12 +457,24 @@ layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Rr" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer12" groups=["bind_buttons"]]
-custom_minimum_size = Vector2(120, 0)
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer12"]
 layout_mode = 2
-text = "Change
-"
+
+[node name="Rr" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer12/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
 metadata/action_name = "roll_right"
+metadata/input_type = "keyboard"
+
+[node name="Rr2" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer12/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
+metadata/action_name = "roll_right"
+metadata/input_type = "gamepad"
 
 [node name="SpanningCellContainer13" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
 layout_mode = 2
@@ -363,11 +490,24 @@ layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Ju" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer14" groups=["bind_buttons"]]
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer14"]
 layout_mode = 2
-text = "Change
-"
+
+[node name="Ju" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer14/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
 metadata/action_name = "jump"
+metadata/input_type = "keyboard"
+
+[node name="Ju2" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer14/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
+metadata/action_name = "jump"
+metadata/input_type = "gamepad"
 
 [node name="SpanningCellContainer15" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
 layout_mode = 2
@@ -383,11 +523,24 @@ layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Bo" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer16" groups=["bind_buttons"]]
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer16"]
 layout_mode = 2
-text = "Change
-"
+
+[node name="Bo" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer16/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
 metadata/action_name = "boost"
+metadata/input_type = "keyboard"
+
+[node name="Bo2" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer16/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
+metadata/action_name = "boost"
+metadata/input_type = "gamepad"
 
 [node name="SpanningCellContainer17" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
 custom_minimum_size = Vector2(120, 0)
@@ -405,11 +558,24 @@ layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Br" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer18" groups=["bind_buttons"]]
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer18"]
 layout_mode = 2
-text = "Change
-"
+
+[node name="Br" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer18/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
 metadata/action_name = "brake"
+metadata/input_type = "keyboard"
+
+[node name="Br2" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer18/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
+metadata/action_name = "brake"
+metadata/input_type = "gamepad"
 
 [node name="SpanningCellContainer19" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
 layout_mode = 2
@@ -426,12 +592,24 @@ layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Cl" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer20" groups=["bind_buttons"]]
-custom_minimum_size = Vector2(120, 0)
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer20"]
 layout_mode = 2
-text = "Change
-"
+
+[node name="Cl" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer20/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
 metadata/action_name = "camera_lock"
+metadata/input_type = "keyboard"
+
+[node name="Cl2" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer20/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
+metadata/action_name = "camera_lock"
+metadata/input_type = "gamepad"
 
 [node name="SpanningCellContainer21" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
 layout_mode = 2
@@ -447,11 +625,24 @@ layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Rs" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer22" groups=["bind_buttons"]]
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer22"]
 layout_mode = 2
-text = "Change
-"
+
+[node name="Rs" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer22/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
+metadata/input_type = "keyboard"
 metadata/action_name = "reset_ball"
+
+[node name="Rs2" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer22/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
+metadata/action_name = "reset_ball"
+metadata/input_type = "gamepad"
 
 [node name="SpanningCellContainer23" type="Container" parent="Settings/Controls/ControlsMenu/SpanningTableContainer"]
 layout_mode = 2
@@ -467,11 +658,24 @@ layout_mode = 2
 script = ExtResource("6_aaywf")
 metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 
-[node name="Bk" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer24" groups=["bind_buttons"]]
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer24"]
 layout_mode = 2
-text = "Change
-"
+
+[node name="Bk" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer24/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
 metadata/action_name = "ui_cancel"
+metadata/input_type = "keyboard"
+
+[node name="Bk2" type="Button" parent="Settings/Controls/ControlsMenu/SpanningTableContainer/SpanningCellContainer24/HBoxContainer" groups=["bind_buttons"]]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Change"
+metadata/action_name = "ui_cancel"
+metadata/input_type = "gamepad"
 
 [node name="Display" type="TabBar" parent="Settings"]
 visible = false
@@ -504,7 +708,6 @@ metadata/_custom_type_script = "uid://cgovyjkjx3ust"
 layout_direction = 3
 layout_mode = 2
 text = "Fullscreen    "
-metadata/action_name = "move_forward"
 
 [node name="SpanningCellContainer6" type="Container" parent="Settings/Display/DisplayMenu/SpanningTableContainer"]
 custom_minimum_size = Vector2(120, 0)
@@ -517,7 +720,6 @@ layout_direction = 3
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Borderless   "
-metadata/action_name = "move_forward"
 
 [node name="SpanningCellContainer4" type="Container" parent="Settings/Display/DisplayMenu/SpanningTableContainer"]
 custom_minimum_size = Vector2(120, 0)
@@ -530,7 +732,6 @@ layout_direction = 3
 layout_mode = 2
 size_flags_horizontal = 4
 text = "VSync            "
-metadata/action_name = "move_forward"
 
 [node name="Audio" type="TabBar" parent="Settings"]
 visible = false
@@ -575,7 +776,6 @@ layout_mode = 2
 size_flags_horizontal = 7
 max_value = 1.0
 step = 0.05
-metadata/action_name = "move_forward"
 
 [node name="SpanningCellContainer5" type="Container" parent="Settings/Audio/AudioMenu/SpanningTableContainer"]
 custom_minimum_size = Vector2(120, 0)
@@ -598,7 +798,6 @@ layout_mode = 2
 size_flags_horizontal = 7
 max_value = 1.0
 step = 0.05
-metadata/action_name = "move_forward"
 
 [node name="SpanningCellContainer3" type="Container" parent="Settings/Audio/AudioMenu/SpanningTableContainer"]
 custom_minimum_size = Vector2(120, 0)
@@ -621,12 +820,13 @@ layout_mode = 2
 size_flags_horizontal = 7
 max_value = 1.0
 step = 0.05
-metadata/action_name = "move_forward"
 
 [connection signal="pressed" from="CenterContainer/MainMenu/Game" to="." method="_on_game_pressed"]
 [connection signal="pressed" from="CenterContainer/MainMenu/Settings" to="." method="OnSettingsPressed"]
 [connection signal="pressed" from="CenterContainer/MainMenu/Lan" to="." method="OnLanPressed"]
 [connection signal="pressed" from="CenterContainer/MainMenu/Quit" to="." method="OnQuitButtonPressed"]
+[connection signal="focus_entered" from="Settings" to="Settings" method="_on_focus_entered"]
+[connection signal="tab_changed" from="Settings" to="Settings" method="_on_tab_changed"]
 [connection signal="toggled" from="Settings/Display/DisplayMenu/SpanningTableContainer/SpanningCellContainer2/Fullscreen" to="Settings/Display/DisplayMenu" method="_on_fs_toggled"]
 [connection signal="toggled" from="Settings/Display/DisplayMenu/SpanningTableContainer/SpanningCellContainer6/Borderless" to="Settings/Display/DisplayMenu" method="_on_bs_toggled"]
 [connection signal="toggled" from="Settings/Display/DisplayMenu/SpanningTableContainer/SpanningCellContainer4/VSync" to="Settings/Display/DisplayMenu" method="_on_vs_toggled"]

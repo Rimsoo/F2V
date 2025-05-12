@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public partial class SettingsManager : Node
 {
+    public enum InputType { KeyboardMouse, Gamepad }
     private const string SETTINGS_PATH = "user://settings.cfg";
 
     private Dictionary<string, Dictionary<string, Variant>> _settings = new()
@@ -79,4 +80,38 @@ public partial class SettingsManager : Node
         }
     }
 
+    public void SetControlEvents(string action, InputType inputType, Godot.Collections.Array<InputEvent> events)
+    {
+        string key = $"{action}_{inputType}";
+        var serialized = new Godot.Collections.Array<Variant>();
+        foreach (var evt in events) serialized.Add(evt);
+        _settings["Controls"][key] = serialized;
+    }
+
+    public Godot.Collections.Array<InputEvent> GetControlEvents(string action, InputType inputType)
+    {
+        string key = $"{action}_{inputType}";
+        var result = new Godot.Collections.Array<InputEvent>();
+        if (_settings["Controls"].TryGetValue(key, out var value))
+        {
+            foreach (Variant item in value.As<Godot.Collections.Array>())
+            {
+                if (item.As<InputEvent>() is InputEvent evt)
+                    result.Add(evt);
+            }
+        }
+        return result;
+    }
+
+    // Alternative plus simple pour un seul événement
+    public void SetControlEvent(string action, InputEvent @event)
+    {
+        _settings["Controls"][action] = @event;
+    }
+
+    public InputEvent GetControlEvent(string action)
+    {
+        var value = _settings["Controls"].GetValueOrDefault(action, default(Variant));
+        return value.VariantType == Variant.Type.Object ? value.As<InputEvent>() : null;
+    }
 }
